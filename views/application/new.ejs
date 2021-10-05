@@ -1,0 +1,55 @@
+<%- include("../../partials/application/header.ejs")%>
+
+<form class="w-50 mx-auto my-5" action="/app/<%=selectedCompany._id%>/new" method="POST">
+    <h1 class="display-4 lead mb-5">Add a new Company</h1>
+    <div class="row mb-3">
+      <label for="inputCompanyName" class="col-sm-2 col-form-label">Company Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="inputCompanyName" name="company[name]" value="Ay Frieght, Inc.">
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputMC" class="col-sm-2 col-form-label">MC:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="inputMC" name="company[mc]" value="615353">
+      </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputDot" class="col-sm-2 col-form-label">DOT</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputDot" name="company[dot]" value="951421">
+        </div>
+      </div>
+      <div class="row mb-5">
+        <label for="inptTaxID" class="col-sm-2 col-form-label">Tax-ID:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inptTaxID" name="company[taxID]" value="615353">
+        </div>
+      </div>
+      <div class="row mb-5">
+        <label for="inputContact" class="col-sm-2 col-form-label">Contact Detail:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control mb-3" id="inputContactTitle" name="company[contact][title]" placeholder="Title" value="Operations Manager">
+          <input type="text" class="form-control mb-3" id="inputContactFirstName" name="company[contact][firstName]" placeholder= 'First Name'  value="Adrian">
+          <input type="text" class="form-control mb-3" id="inputContactLastName" name="company[contact][lastName]" placeholder= 'Last Name'  value="Alvarez">
+          <input type="text" class="form-control mb-3" id="inputContactMobile" name="company[contact][mobile]" placeholder= 'Phone Number'  value="561-306-8437">
+          <input type="text" class="form-control" id="inputContactEmail" name="company[contact][email]" placeholder= 'email'  value="ayfreights@gmail.com">
+        </div>
+      </div>
+      <div class="row mb-5">
+        <label for="inputBilling" class="col-sm-2 col-form-label">Billing Detail:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control mb-3" name="company[billing][address1]" placeholder="Address 1" value="3855 Dale Rd.">
+            <input type="text" class="form-control mb-3" name="company[billing][address2]" placeholder="Address 2">
+            <input type="text" class="form-control mb-3" name="company[billing][city]" placeholder="city" value="West Palm Beach">
+            <input type="text" class="form-control mb-3" name="company[billing][state]" placeholder="State" value="Florida">
+            <input type="text" class="form-control mb-3" name="company[billing][postal]" placeholder="Postal" value="33406">
+            <input type="text" class="form-control" name="company[billing][country]" placeholder="Country" value="United States">
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary w-100 mb-3" type="submit">Submit</button>
+        <a href="/app/<%=selectedCompany._id%>" class="btn btn-secondary">Go Back</a>
+</form>
+
+<%- include("../../partials/application/footer.ejs")%>

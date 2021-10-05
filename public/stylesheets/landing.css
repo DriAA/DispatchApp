@@ -1,0 +1,40 @@
+
+body,html{
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+
+#mainHeader{
+    text-align: center;
+    background-image: url("https://images.unsplash.com/photo-1485575301924-6891ef935dcd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1100&q=80");
+    background-position: center;
+    background-size: cover;
+    color: white;
+    font-size: 1em;
+}
+
+.backroundColor{
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    padding:5% 0%;
+}
+
+.footer ul{
+    list-style-type: none;
+}
+
+
+.img-col {
+    background-image: url('https://images.unsplash.com/photo-1492168732976-2676c584c675?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 50vh;
+}
+
+.about-grabber{
+    min-height: 30vh;
+}

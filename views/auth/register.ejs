@@ -1,0 +1,32 @@
+<%- include("../../partials/auth/header.ejs")%>
+
+
+    <div class="row m-auto">
+        <div class="col-6 my-auto px-5">
+            <div class="container">
+                <form class="row g-3 m-auto" method="POST" action='/auth/register'>
+                    <div class="col-12">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" name="email" value="randomEmail@gmail.com">
+                      </div>
+                    <div class="col-12">
+                      <label for="inputUsername" class="form-label">Username</label>
+                      <input type="text" class="form-control" id="inputUsername" name="username" value="john">
+                    </div>
+                    <div class="col-md-12">
+                      <label for="inputPassword" class="form-label">Password</label>
+                      <input type="password" class="form-control" name="password" id="inputPassword" value="passwordsarenice">
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-danger mb-4 w-100">Register</button>
+                      <a href="/" class="link-primary w-100">Return to site</a>
+
+                    </div>
+                  </form>
+            </div>
+        </div>
+        <div class="col-6 auth">
+        </div>
+    </div>
+
+<%- include("../../partials/auth/footer.ejs")%>

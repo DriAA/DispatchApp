@@ -1,0 +1,103 @@
+<%- include("../../partials/load-map/header.ejs")%>
+
+<p class="lead">
+    <span class="fw-bold d-block"> Selected Company: </span>
+    <%= selectedCompany%>
+</p>
+
+<p class="lead">
+    <span class="fw-bold d-block"> Selected Load: </span>
+    <%=selectedLoad%>
+</p>
+
+
+<form action="/app/<%=selectedCompany._id%>/load/<%=selectedLoad._id%>/edit?_method=PUT" method="POST" class="m-5">
+  <h1 class="display-4 lead mb-5">Edit Load for <%=selectedCompany.name%></h1>
+  <div class="row mb-3">
+    <label for="inputCompanyName" class="col-sm-2 col-form-label">Load ID:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputCompanyName" name="load[loadID]" value="<%=selectedLoad.loadID%>">
+    </div>
+  </div>
+    <div class="row mb-3">
+      <label for="inputCompanyName" class="col-sm-2 col-form-label">Rate:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="inputCompanyName" name="load[rate]" value="<%=selectedLoad.rate%>">
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputMC" class="col-sm-2 col-form-label">Commodity:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="inputMC" name="load[commodity]" value="<%=selectedLoad.commodity%>">
+      </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputMC" class="col-sm-2 col-form-label">Weight:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputMC" name="load[weight]" value="<%=selectedLoad.weight%>">
+        </div>
+      </div>
+      <div class="row mb-5">
+        <label for="inputMC" class="col-sm-2 col-form-label">Miles:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputMC" name="load[miles]" value="<%=selectedLoad.miles%>">
+        </div>
+      </div>
+
+    <div class="row mb-3">
+        <label for="inptTaxID" class="col-sm-2 col-form-label">Trailer:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inptTaxID" name="load[trailer]" value="<%=selectedLoad.trailer%>">
+        </div>
+    </div>
+      <div class="row mb-3">
+        <label for="inptTaxID" class="col-sm-2 col-form-label">Trailer Length</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inptTaxID" name="load[length]" value="<%=selectedLoad.length%>">
+        </div>
+    </div>
+    <div class="row mb-5">
+        <label for="inputDot" class="col-sm-2 col-form-label">Temperature:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputDot" name="load[temperature]" value="<%=selectedLoad.temperature%>">
+        </div>
+      </div>
+      
+      <div class="row mb-5">
+        <label for="inputBilling" class="col-sm-2 col-form-label">Pickup Detail:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control mb-3" name="load[pickup][facility]" placeholder="Facility" value="<%=selectedLoad.pickup.facility%>">
+            <input type="text" class="form-control mb-3" name="load[pickup][address1]" placeholder="Address 1" value="<%=selectedLoad.pickup.address1%>">
+            <input type="text" class="form-control mb-3" name="load[pickup][address2]" placeholder="Address 2" value="<%=selectedLoad.pickup.address2%>">
+            <input type="text" class="form-control mb-3" name="load[pickup][city]" placeholder="city" value="<%=selectedLoad.pickup.city%>">
+            <input type="text" class="form-control mb-3" name="load[pickup][state]" placeholder="State" value="<%=selectedLoad.pickup.state%>">
+            <input type="text" class="form-control mb-3" name="load[pickup][postal]" placeholder="Postal" value="<%=selectedLoad.pickup.postal%>">
+            <input type="text" class="form-control" name="load[pickup][country]" placeholder="Country" value="<%=selectedLoad.pickup.country%>">
+        </div>
+      </div>
+      <div class="row mb-5">
+        <label for="inputBilling" class="col-sm-2 col-form-label">Delivery Detail:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control mb-3" name="load[delivery][facility]" placeholder="Facility" value="<%=selectedLoad.delivery.facility%>">
+            <input type="text" class="form-control mb-3" name="load[delivery][address1]" placeholder="Address 1" value="<%=selectedLoad.delivery.address1%>">
+            <input type="text" class="form-control mb-3" name="load[delivery][address2]" placeholder="Address 2" value="<%=selectedLoad.delivery.address2%>">
+            <input type="text" class="form-control mb-3" name="load[delivery][city]" placeholder="city" value="<%=selectedLoad.delivery.city%>">
+            <input type="text" class="form-control mb-3" name="load[delivery][state]" placeholder="State" value="<%=selectedLoad.delivery.state%>">
+            <input type="text" class="form-control mb-3" name="load[delivery][postal]" placeholder="Postal" value="<%=selectedLoad.delivery.postal%>">
+            <input type="text" class="form-control" name="load[delivery][country]" placeholder="Country" value="<%=selectedLoad.delivery.country%>">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="inputMC" class="col-sm-2 col-form-label">Notes:</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="exampleFormControlTextarea1" name="load[note]" rows="3"><%=selectedLoad.note%></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary w-100 mb-3" type="submit">Submit</button>
+        <a href="/<%=selectedCompany._id%>/load/<%=selectedLoad._id%>" class="btn btn-secondary w-100">Go Back</a>
+</form>
+
+
+
+<%- include("../../partials/load-map/footer.ejs")%>

@@ -1,0 +1,33 @@
+<%- include("../../partials/auth/header.ejs")%>
+
+
+    <div class="row m-auto">
+        <div class="col-6 my-auto px-5">
+            <div class="container">
+                <form class="row g-3 m-auto" method="POST" action='/auth/login'>
+                    <div class="col-12">
+                      <label for="inputUsername" class="form-label">Username</label>
+                      <input type="text" class="form-control" id="inputUsername" name="username" value="john">
+                    </div>
+                    <div class="col-md-12">
+                      <label for="inputPassword" class="form-label">Password</label>
+                      <input type="password" class="form-control" name="password" id="inputPassword" value="passwordsarenice">
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-success mb-4 w-100">Log in</button>
+                    </div>
+                  </form>
+                <form action="/auth/reset" method="post">
+                  <button type="submit" class="btn btn-danger d-block w-100">Purge Data</button>
+                </form>
+                <div class="my-5">
+                  <a href="/auth/register" class="link-primary w-100 d-block mb-3">Dont have an account?</a>
+                  <a href="/" class="link-primary w-100">Return to site</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 auth">
+        </div>
+    </div>
+
+<%- include("../../partials/auth/footer.ejs")%>

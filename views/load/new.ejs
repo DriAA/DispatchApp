@@ -1,0 +1,545 @@
+<%- include("../../partials/load-map/header.ejs")%>
+
+
+
+<p class="lead">
+  <%= selectedCompany.broker%>
+</p>
+
+  <div class="container border">
+    <form class="p-3" action="/app/<%=selectedCompany._id%>/load/new" method="POST">
+
+      <div class="row justify-content-between mb-5">
+        <div class="col-12  col-md-5 col-lg-4 text-sm-center text-md-start">
+
+          <!-- Add Button Broker -->
+          <div class="card p-5 text-center list-group-item-action card-addBroker active">
+            Add a Broker
+          </div>
+
+          <!-- Broker Selection -->
+          <div class="card border-0 card-SelectBroker d-none">
+            <div class="card-SelectBroker-Bg"></div>
+            <div class="brokerGroup border">
+              <ul class="list-group list-group-flush broker">
+                <%for(let broker of selectedCompany.broker){%>
+                  <li class="list-group-item">
+                    <h5 class="fw-bold lead brokerName">
+                      <%=broker.id.name%>
+                    </h5>
+                    <p class=" fs-6 text-muted brokerId"><%=broker.id._id%></p>
+                  </li>
+                  <%}%>
+                    <li class="list-group-item">
+                      <p class="link-primary mb-0" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add Another
+                        Broker <i class="fas fa-plus"></i></p>
+                    </li>
+              </ul>
+
+            </div>
+          </div>
+
+
+          <!-- Details Card -->
+          <div class="card p-3 d-none brokerDetails text-start">
+            <!-- Name -->
+            <h5 class="fw-bold lead brokerName"></h5>
+            <input type="text" class="form-control brokerId" name="load[broker][id]">
+            <!-- Address -->
+            <p class="fs-6 lead mb-0">
+              <span class="address1"></span> <span class="address2"></span> <br>
+              <span class="city"></span>, <span class="state"></span> <span class="postal"></span>
+            </p>
+            <p class="mb-0 d-block link-primary differenBrokerBtn"><span>Choose a different Broker</span></p> 
+            <p id="edit-Details" class="mb-0 d-block link-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit <span class="edit-brokerName"></span></p>
+          </div>
+
+
+        </div>
+        <div class="col-12 col-md-5 col-lg-4 text-sm-center text-md-end">
+          <div class="row mb-3">
+            <label for="inputCompanyName" class="col-4 col-md-6 col-lg-5 col-form-label">Load ID:</label>
+            <div class="col-6 col-md-6 col-lg-7">
+              <input type="text" class="form-control" id="inputCompanyName" name="load[loadID]" value="00123">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputCompanyName" class="col-4 col-md-6 col-lg-5 col-form-label">PO #:</label>
+            <div class="col-6 col-md-6 col-lg-7">
+              <input type="text" class="form-control" id="inputCompanyName" name="load[loadPO]" value="00123">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Load Details -->
+      <div class="row">
+        <p class="text-muted lead fs-3 mt-5 pt-2 mb-2">Load Details</p>
+        <!-- Rate Input -->
+        <div class="col-12 mb-3">
+          <label for="inputRate" class="col-form-label lead">Rate:</label>
+          <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="text" class="form-control" name="load[rate]" aria-label="Amount (to the nearest dollar)"
+              value="500">
+          </div>
+        </div>
+
+
+        <!-- Load Type Input -->
+        <div class="col-12  mb-3">
+          <label for="loadType" class=" col-form-label lead">Load Type:</label>
+          <select class="form-select" id="loadType" name="load[type]">
+            <option selected value="Van">Van</option>
+            <option value="Reefer">Reefer</option>
+            <option value="Hot Shot">Hot Shot</option>
+            <option value="Flat Bed">Flat Bed</option>
+            <option value="Flat Bed">Other</option>
+
+          </select>
+        </div>
+
+
+        <!-- Commodity Input  -->
+        <div class="col-12 col-md-6 mb-3">
+          <label for="inputCommodity" class=" col-form-label lead">Commodity:</label>
+          <input type="text" class="form-control" id="inputCommodity" name="load[commodity]" value="Frozen chicken">
+        </div>
+
+
+        <!-- Weight Input  -->
+        <div class="col-12 col-md-6 mb-3">
+          <label for="inputWeight" class=" col-form-label lead">Weight:</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="inputWeight" name="load[weight]" value="1000">
+            <span class="input-group-text">lbs</span>
+          </div>
+        </div>
+
+
+        <!-- Driver Input -->
+        <div class="col-12 mb-3">
+          <label for="loadDriver" class=" col-form-label lead">Driver:</label>
+          <select class="form-select" id="loadDriver" name="load[driver]">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+            <option value="4">Add a new driver</option>
+          </select>
+        </div>
+      </div>
+
+
+        <!-- pickup Details -->
+        <div class="row justify-content-between mt-5 mb-3">
+          <div class="col-12  col-md-5 text-sm-center text-md-start">
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <label for="inputPickupDate" class=" col-form-label lead">Pickup Date:</label>
+                <input type="date" class="form-control" name="load[date][pickup]" id="inputPickupDate">
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="inputDeliveryDate" class=" col-form-label lead">Delvery Date:</label>
+                <input type="date" class="form-control" name="load[date][delivery]" id="inputDeliveryDate">
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-5 text-sm-center text-md-end">
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <label for="inputMiles" class=" col-form-label lead">Total Miles:</label>
+                <input type="text" name="load[miles]" id="inputMiles" class="form-control" value="431">
+              </div>
+              <div class="col-12 col-md-6">
+                <label for="inputPickupDate" class=" col-form-label lead">Add new option:</label>
+                <div class="row">
+                  <div class="col-6 text-end">
+                    <span class="btn btn-primary" id="optionBtn">Add</span>
+                  </div>
+                  <div class="col-6 text-start">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected value="1">Lane</option>
+                      <option value="2">Fee</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Address Table -->
+        <div class="addressesTable table-responsive border border-bottom-0 rounded-3">
+          <table class="table mb-0">
+            <thead class="bg-light">
+              <tr>
+                <th scope="col">Type</th>
+                <th scope="col">QT</th>
+                <th scope="col">Description</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- One -->
+              <tr>
+                <td class="type fw-bold">Load</td>
+                <td class="quantity">1</td>
+                <td class="description">
+                  <div class="row">
+                    <!-- pickup -->
+                    <div class="col-12 col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text">Pickup</span>
+                        <input type="text" aria-label="Pickup" class="form-control" placeholder="City" name="load[stop][1][pickup][city]" value="Tampa">
+                        <input type="text" aria-label="Delivery" class="form-control" placeholder="State" name="load[stop][1][pickup]][state]" value="FL">
+                      </div>
+                    </div>
+
+                    <!-- Delivery -->
+                    <div class="col-12 col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text">Delivery</span>
+                        <input type="text" aria-label="First name" class="form-control" placeholder="City" name="load[stop][1][delivery][city]" value="Miami">
+                        <input type="text" aria-label="Last name" class="form-control" placeholder="State" name="load[stop][1][delivery][state]" value="FL">
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="align-middle action">
+                  <i class="fas fa-trash-alt text-danger mt-2 deleteLane"></i>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+
+        <!-- Notes Tab -->
+        <div class="row my-3">
+          <div class="col-12">
+            <label for="inputMC" class="col-form-label lead">Notes:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+              name="load[note]">Driver Paid Lumper</textarea>
+          </div>
+        </div>
+
+
+        <!-- Submit Buttons -->
+        <div class="row">
+          <div class="col mt-4">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a class="btn btn-secondary" href="/app/<%=selectedCompany._id%>">Return to menu</a>
+          </div>
+        </div>
+    </form>
+
+
+
+
+
+    <!--New Broker  Modal -->
+    <div class="modal  brokerModal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                  type="button" role="tab" aria-controls="contact" aria-selected="true">Contact</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="billing-tab" data-bs-toggle="tab" data-bs-target="#billing" type="button"
+                  role="tab" aria-controls="billing" aria-selected="false">Billing</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="more-tab" data-bs-toggle="tab" data-bs-target="#more" type="button"
+                  role="tab" aria-controls="more" aria-selected="false">More</button>
+              </li>
+            </ul>
+            <form action="/app/<%=selectedCompany._id%>/broker/new" method="POST">
+              <div class="tab-content" id="brokerTabContent">
+                <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                  <!-- Company Details -->
+                  <div class="p-5 text-sm-start text-md-end">
+                    <div class="row mb-3">
+                      <label for="brokerName" class="col-sm-4 col-form-label">Broker Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="brokerName" name="broker[name]" value="TQL">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerEmail" class="col-sm-4 col-form-label">Email</label>
+                      <div class="col-sm-8 ">
+                        <input type="email" class="form-control" id="brokerEmail" name="broker[email]"
+                          value="TQL@gmail.com">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerTollFree" class="col-sm-4 col-form-label">Toll-free</label>
+                      <div class="col-sm-8 ">
+                        <input type="text" class="form-control" id="brokerTollFree" name="broker[tollFree]"
+                          value="800-580-3101">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerMC" class="col-sm-4 col-form-label">MC</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="brokerMC" name="broker[mc]" value="615353">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerDOT" class="col-sm-4 col-form-label">DOT</label>
+                      <div class="col-sm-8 ">
+                        <input type="text" class="form-control" id="brokerDOT" name="broker[dot]" value="006432">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Company Details -->
+                </div>
+                <div class="tab-pane fade" id="billing" role="tabpanel" aria-labelledby="billing-tab">
+                  <!-- Billing Details -->
+                  <div class="p-5 text-sm-start text-md-end">
+                    <div class="row mb-3">
+                      <label for="brokerBillingAddress1" class="col-sm-4 col-form-label">Address 1</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="brokerBillingAddress1"
+                          name="broker[billing][address1]" value="3855 Dale Rd">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerBillingAddress2" class="col-sm-4 col-form-label">Address 2</label>
+                      <div class="col-sm-8 ">
+                        <input type="text" class="form-control" id="brokerBillingAddress2"
+                          name="broker[billing][address2]" value="Suite 401">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerBillingCity" class="col-sm-4 col-form-label">City</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="brokerBillingCity" name="broker[billing][city]"
+                          value="Carlsbad">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerBillingState" class="col-sm-4 col-form-label">State</label>
+                      <div class="col-sm-8 ">
+                        <input type="text" class="form-control" id="brokerBillingState" name="broker[billing][state]"
+                          value="CA">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerBillingPostal" class="col-sm-4 col-form-label">Postal</label>
+                      <div class="col-sm-8 ">
+                        <input type="text" class="form-control" id="brokerBillingPostal" name="broker[billing][postal]"
+                          value="33406">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Billing Details -->
+                </div>
+                <div class="tab-pane fade" id="more" role="tabpanel" aria-labelledby="more-tab">
+                  <!-- More Details -->
+                  <div class="p-5 text-sm-start text-md-end">
+                    <div class="row mb-3">
+                      <label for="brokerMobile" class="col-sm-4 col-form-label">Mobile</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="brokerMobile" name="broker[mobile]"
+                          value="561-306-8437">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerFax" class="col-sm-4 col-form-label">Fax</label>
+                      <div class="col-sm-8 ">
+                        <input type="text" class="form-control" id="brokerFax" name="broker[fax]" value="561-306-8438">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerWebsite" class="col-sm-4 col-form-label">Website</label>
+                      <div class="col-sm-8 ">
+                        <input type="text" class="form-control" id="brokerWebsite" name="broker[website]"
+                          value="www.tql.com">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="brokerNotes" class="col-sm-4 col-form-label">Notes</label>
+                      <div class="col-sm-8 ">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"
+                          name="broker[note]">Driver Paid Lumper</textarea>
+                      </div>
+                    </div>
+                    <!-- More Details -->
+                  </div>
+                </div>
+
+
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Edit Broker Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Broker Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="edit-contact-tab" data-bs-toggle="tab" data-bs-target="#edit-contact"
+              type="button" role="tab" aria-controls="edit-contact" aria-selected="true">Contact</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="edit-billing-tab" data-bs-toggle="tab" data-bs-target="#edit-billing" type="button"
+              role="tab" aria-controls="edit-billing" aria-selected="false">Billing</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="edit-more-tab" data-bs-toggle="tab" data-bs-target="#edit-more" type="button"
+              role="tab" aria-controls="edit-more" aria-selected="false">More</button>
+          </li>
+        </ul>
+        <form action="/app/<%=selectedCompany._id%>/broker/edit" method="POST" id="edit-BrokerDetails">
+          <div class="tab-content" id="edit-brokerTabContent">
+            <!-- Company Details -->
+            <div class="tab-pane fade show active" id="edit-contact" role="tabpanel" aria-labelledby="edit-contact-tab">
+              <div class="p-5 text-sm-start text-md-end">
+                <div class="row mb-3">
+                  <label for="edit-brokerName" class="col-sm-4 col-form-label">Broker Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="edit-brokerName" name="broker[name]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerEmail" class="col-sm-4 col-form-label">Email</label>
+                  <div class="col-sm-8 ">
+                    <input type="email" class="form-control" id="edit-brokerEmail" name="broker[email]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerTollFree" class="col-sm-4 col-form-label">Toll-free</label>
+                  <div class="col-sm-8 ">
+                    <input type="text" class="form-control" id="edit-brokerTollFree" name="broker[tollFree]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerMC" class="col-sm-4 col-form-label">MC</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="edit-brokerMC" name="broker[mc]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerDOT" class="col-sm-4 col-form-label">DOT</label>
+                  <div class="col-sm-8 ">
+                    <input type="text" class="form-control" id="edit-brokerDOT" name="broker[dot]">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Company Billing -->
+            <div class="tab-pane fade" id="edit-billing" role="tabpanel" aria-labelledby="edit-billing-tab">
+             <div class="p-5 text-sm-start text-md-end">
+                <div class="row mb-3">
+                  <label for="edit-brokerBillingAddress1" class="col-sm-4 col-form-label">Address 1</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="edit-brokerBillingAddress1"
+                      name="broker[billing][address1]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerBillingAddress2" class="col-sm-4 col-form-label">Address 2</label>
+                  <div class="col-sm-8 ">
+                    <input type="text" class="form-control" id="edit-brokerBillingAddress2"
+                      name="broker[billing][address2]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerBillingCity" class="col-sm-4 col-form-label">City</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="edit-brokerBillingCity" name="broker[billing][city]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerBillingState" class="col-sm-4 col-form-label">State</label>
+                  <div class="col-sm-8 ">
+                    <input type="text" class="form-control" id="edit-brokerBillingState" name="broker[billing][state]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerBillingPostal" class="col-sm-4 col-form-label">Postal</label>
+                  <div class="col-sm-8 ">
+                    <input type="text" class="form-control" id="edit-brokerBillingPostal" name="broker[billing][postal]">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- More Details -->
+            <div class="tab-pane fade" id="edit-more" role="tabpanel" aria-labelledby="edit-more-tab">
+              <div class="p-5 text-sm-start text-md-end">
+                <div class="row mb-3">
+                  <label for="edit-brokerMobile" class="col-sm-4 col-form-label">Mobile</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="edit-brokerMobile" name="broker[mobile]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerFax" class="col-sm-4 col-form-label">Fax</label>
+                  <div class="col-sm-8 ">
+                    <input type="text" class="form-control" id="edit-brokerFax" name="broker[Fax]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerWebsite" class="col-sm-4 col-form-label">Website</label>
+                  <div class="col-sm-8 ">
+                    <input type="text" class="form-control" id="edit-brokerWebsite" name="broker[website]">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="edit-brokerNotes" class="col-sm-4 col-form-label">Notes</label>
+                  <div class="col-sm-8 ">
+                    <textarea class="form-control" id="edit-brokerNotes" rows="5"
+                      name="broker[note]"></textarea>
+                  </div>
+                </div>
+                <!-- More Details -->
+              </div>
+            </div>
+
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-warning">Update</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Custom JS -->
+<script src="/js/load.js"></script>
+<%- include("../../partials/load-map/footer.ejs")%>

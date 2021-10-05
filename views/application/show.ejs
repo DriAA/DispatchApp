@@ -1,0 +1,55 @@
+<%- include("../../partials/application/header.ejs")%>
+    <div class="container my-5">
+        <div class="pb-3">
+            <h1 class="display-6 lead">Dashboard for <%= selectedCompany.name %>
+            </h1>
+            <p class="text-muted">Company - CRUD</p>
+            <!-- Read -->
+            <a class="btn btn-success" href="/app/<%=selectedCompany._id%>">View</a>
+            <!-- Create -->
+            <a class="btn btn-primary" href="/app/<%=selectedCompany._id%>/new">New</a>
+            <!-- Updated -->
+            <a class="btn btn-warning" href="/app/<%=selectedCompany._id%>/edit">Edit</a>
+            <!-- Destroy -->
+            <form action="/app/<%=selectedCompany._id%>?_method=DELETE" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        
+            <p class="text-muted lead"> Current Companies: </p>
+            <ul>
+                <%for(let i=0;i<loggedUser.company.length;i++){%>
+                    <li>
+                       <span><%=i + 1%> - </span> <a href="/app/<%=loggedUser.company[i].id._id%>"><%= loggedUser.company[i].id.name%></a> <br>
+                       <%= loggedUser.company[i].id %> 
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+        <div class="border-top my-5 pt-5">
+            <h1 class="display-6 lead">Ceate a new load for <%= selectedCompany.name %></h1>
+            <p class="text-muted">Load - CRUD</p>
+            <!-- Create -->
+            <a class="btn btn-primary" href="/app/<%=selectedCompany._id%>/load/new">New</a>
+
+
+            <p class="text-muted lead mt-4"> Total Loads: <span><%=selectedCompany.load.length%></span> </p>
+            <p class="text-muted lead"> Current Loads: </p>
+
+
+            <%for(let load of selectedCompany.load){%>
+                <div class="card">
+                    <p class="lead"><%=load%></p>
+                </div>
+                <%}%>
+        </div>
+
+
+
+        <div class="border-top my-5 pt-5">
+            <h1 class="display-6 lead">List of all Brokers associated with <%=selectedCompany.name%></h1>
+            <p class="text-muted">Broker - CRUD</p>
+            <p class="lead"><%=selectedCompany.broker%></p>
+        </div>
+    </div>
+
+<%- include("../../partials/application/footer.ejs")%>
