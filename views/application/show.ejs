@@ -38,7 +38,9 @@
 
             <%for(let load of selectedCompany.load){%>
                 <div class="card">
-                    <p class="lead"><%=load%></p>
+                    <p class="lead"><%=load%>
+                    <a class="btn btn-primary d-block m-4" href="/app/<%=selectedCompany._id%>/load/<%=load.id._id%>">View Load</a>
+                    </p>
                 </div>
                 <%}%>
         </div>

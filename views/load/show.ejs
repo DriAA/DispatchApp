@@ -1,131 +1,310 @@
 <%- include("../../partials/load-map/header.ejs")%>
+<span class="d-none brokerId"><%=selectedLoad.id%></span>
 
 
-<style>
-    body {
-      margin: 0;
-      padding: 0;
+
+  <div class="row">
+    <div class="col-4 border p-0">
+      <ul class="list-group">
+        <!-- Load Milage -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Miles:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.miles%> (estimated)
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Pickup Date -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Pickup Date:</p>
+            </div>
+            <div class="col-8 my-auto">
+              <p class="mb-0">
+                <%=selectedLoad.dates.pickup%>
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Delivery Date -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Delivery Date:</p>
+            </div>
+            <div class="col-8 my-auto">
+              <p class="mb-0 ">
+                <%=selectedLoad.dates.delivery%>
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Load ID -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Load ID:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.loadID%>
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Load PO -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Load PO:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.loadPO%>
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Load Rate -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Rate:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">$<%=selectedLoad.rate%>
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Load Commodity -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Commodity:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.commodity%>
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Load Type -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Load Type:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.type%>
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Load Weight -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Weight:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.weight%> lbs
+              </p>
+            </div>
+          </div>
+        </li>
+        <!-- Load Driver -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Driver:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.driver%>
+              </p>
+            </div>
+          </div>
+        </li>
+
+        <!-- Load Notes -->
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-12">
+              <div class="fw-bold mb-2">
+                Notes
+              </div>
+            </div>
+            <div class="col-12 pe-0">
+              <div class="card col-notes p-1">
+                <%=selectedLoad.driver%>
+              </div>
+            </div>
+          </div>
+        </li>
+
+
+
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Rate:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">$<%=selectedLoad.rate%>
+              </p>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Commodity:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.commodity%>
+              </p>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Weight:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.weight%> lbs
+              </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-8 p-0">
+      <div id='map'></div>
+    </div>
+  </div>
+
+
+
+
+  <p class="lead">
+    <%=selectedLoad%>
+  </p>
+
+
+
+  <script>
+    let loadID = document.querySelector('.brokerId').innerHTML;
+    let loadURL = `/app/api/load/${loadID}`;
+    function routerCenter(arr) {
+      let totalArr = [0, 0];
+      for (let i = 0; i < arr.length; i++) {
+        totalArr[0] = totalArr[0] + arr[i][0]
+        totalArr[1] = totalArr[1] + arr[i][1]
+      }
+      totalArr[0] = (totalArr[0] / arr.length)
+      totalArr[1] = (totalArr[1] / arr.length)
+      return totalArr
+    }
+    function getSouthwestern(c1, c2) {
+      North = Math.max(c1[0], c2[0])
+      South = Math.min(c1[0], c2[0])
+      East = Math.max(c1[1], c2[1])
+      West = Math.min(c1[1], c2[1])
+      return [South, West]
     }
 
-    #map {
-      height: 500px;
-      width: 100%;
-    }
-  </style>
-
-
-
-<h1 class="display-1">This is the  Show Route for load: <span class="brokerId"><%=selectedLoad._id%></span></h1>
-
-<p class="lead"><%=selectedLoad%></p>
-
-
-
-
-<div id='map'></div>
-
-
-
-<script>
-let loadID = document.querySelector('.brokerId').innerHTML;
-let loadURL = `/app/api/load/${loadID}`;
-function routerCenter(arr){
-  let totalArr = [0,0];
-  for(let i = 0;i< arr.length;i++){
-    totalArr[0] =  totalArr[0] + arr[i][0]
-    totalArr[1] =  totalArr[1] + arr[i][1]
-  }
-  totalArr[0] = (totalArr[0]/arr.length)
-  totalArr[1] = (totalArr[1]/arr.length)
-  return  totalArr
-}
-function getSouthwestern(c1,c2){
-  North = Math.max(c1[0],c2[0])
-  South = Math.min(c1[0],c2[0])
-  East = Math.max(c1[1],c2[1])
-  West = Math.min(c1[1],c2[1])
-  return [South,West]
-}
-
-function getNorthEastern(c1,c2){
-    North = Math.max(c1[0],c2[0])
-    South = Math.min(c1[0],c2[0])
-    East = Math.max(c1[1],c2[1])
-    West = Math.min(c1[1],c2[1])
-    return [North,East]
-}
-
-
-
-
-fetch(loadURL)
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-
-    // Try Function
-    southWest = getSouthwestern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
-    northEast = getNorthEastern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
-
-    
-    mapboxgl.accessToken = 'pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA';
-    const map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center:routerCenter(data.stop[0].route.geometry.coordinates),
-    zoom: 10,
-    interactive: false
-    });
-    map.on('load', () => {
-    map.addSource('route', {
-    'type': 'geojson',
-    'data': {
-    'type': 'Feature',
-    'properties': {},
-    'geometry': {
-    'type': 'LineString',
-    'coordinates': data.stop[0].route.geometry.coordinates
-    }
-    }
-    });
-    map.addLayer({
-    'id': 'route',
-    'type': 'line',
-    'source': 'route',
-    'layout': {
-    'line-join': 'round',
-    'line-cap': 'round'
-    },
-    'paint': {
-    'line-color': '#3074B9',
-    'line-width': 8
-    }
-    });
-    });
-
-    map.fitBounds([
-    southWest, // southwestern corner of the bounds
-    northEast // northeastern corner of the bounds
-    ],{padding: 100});
-
-    for(let route of data.stop){
-
-      // Create a default Marker and add it to the map.
-      const marker1 = new mapboxgl.Marker()
-      .setLngLat(route.pickup.geometry.coordinates)
-      .addTo(map);
-            // Create a default Marker and add it to the map.
-      const marker2 = new mapboxgl.Marker()
-      .setLngLat(route.delivery.geometry.coordinates)
-      .addTo(map);
-      
-      
+    function getNorthEastern(c1, c2) {
+      North = Math.max(c1[0], c2[0])
+      South = Math.min(c1[0], c2[0])
+      East = Math.max(c1[1], c2[1])
+      West = Math.min(c1[1], c2[1])
+      return [North, East]
     }
 
-  });
 
- 
-</script>
 
-<%- include("../../partials/load-map/footer.ejs")%>
+
+    fetch(loadURL)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+
+        // Try Function
+        southWest = getSouthwestern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
+        northEast = getNorthEastern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
+
+
+        mapboxgl.accessToken = 'pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA';
+        const map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: routerCenter(data.stop[0].route.geometry.coordinates),
+          zoom: 10,
+          interactive: false
+        });
+        map.on('load', () => {
+          map.addSource('route', {
+            'type': 'geojson',
+            'data': {
+              'type': 'Feature',
+              'properties': {},
+              'geometry': {
+                'type': 'LineString',
+                'coordinates': data.stop[0].route.geometry.coordinates
+              }
+            }
+          });
+          map.addLayer({
+            'id': 'route',
+            'type': 'line',
+            'source': 'route',
+            'layout': {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            'paint': {
+              'line-color': '#3074B9',
+              'line-width': 8
+            }
+          });
+        });
+
+        map.fitBounds([
+          southWest, // southwestern corner of the bounds
+          northEast // northeastern corner of the bounds
+        ], { padding: 100 });
+
+        for (let route of data.stop) {
+
+          // Create a default Marker and add it to the map.
+          const marker1 = new mapboxgl.Marker()
+            .setLngLat(route.pickup.geometry.coordinates)
+            .addTo(map);
+          // Create a default Marker and add it to the map.
+          const marker2 = new mapboxgl.Marker()
+            .setLngLat(route.delivery.geometry.coordinates)
+            .addTo(map);
+
+
+        }
+
+      });
+
+
+  </script>
+
+  <%- include("../../partials/load-map/footer.ejs")%>
