@@ -15,6 +15,10 @@ const Loadschema = new Schema({
             ref: 'Broker'
         }
     },
+    dates:{
+        pickup: String, 
+        delivery: String
+    },
     rate: String,
     commodity: String,
     weight: String,
