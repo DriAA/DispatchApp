@@ -1,11 +1,15 @@
 <%- include("../../partials/load-map/header.ejs")%>
 <span class="d-none brokerId"><%=selectedLoad.id%></span>
 
-
+<div class="container">
 
   <div class="row">
     <div class="col-4 border p-0">
       <ul class="list-group">
+        <!-- Load Details -->
+        <li class="list-group-item bg-light ps-3">
+          <h3>Load Details</h3>
+        </li>
         <!-- Load Milage -->
         <li class="list-group-item">
           <div class="row">
@@ -135,7 +139,6 @@
             </div>
           </div>
         </li>
-
         <!-- Load Notes -->
         <li class="list-group-item">
           <div class="row">
@@ -144,57 +147,72 @@
                 Notes
               </div>
             </div>
-            <div class="col-12 pe-0">
-              <div class="card col-notes p-1">
-                <%=selectedLoad.driver%>
+            <div class="col-12">
+              <div class="card col-notes">
+                <span class="p-2">
+                  <%=selectedLoad.driver%>
+                </span>
               </div>
             </div>
           </div>
         </li>
 
+        <!-- Load Status -->
+        <li class="list-group-item bg-light ps-3">
+          <h3>Load Status</h3>
+        </li>
+        <!-- Mark Completed -->
+        <li class="list-group-item py-3">
+          <div class="row">
+            <div class="col-4 my-auto align-middle">
+              <h4 class="fw-bold my-auto">
+                Completed
+              </h4>
+            </div>
+            <div class="col-8 my-auto align-middle">
+              <i class="far fa-times-circle link-danger fs-1"></i>
+            </div>
+          </div>
+        </li>
+        <!-- Invoice Completed -->
+        <li class="list-group-item py-3">
+          <div class="row">
+            <div class="col-4 my-auto align-middle">
+              <h4 class="fw-bold my-auto">
+                Invoice Sent:
+              </h4>
+            </div>
+            <div class="col-8 my-auto align-middle">
+              <i class="far fa-times-circle link-danger fs-1"></i>
+            </div>
+          </div>
+        </li>
+        <!-- Bol Completed -->
+        <li class="list-group-item py-3">
+          <div class="row">
+            <div class="col-4 my-auto align-middle">
+              <h4 class="fw-bold my-auto">
+                Bols Obtained:
+              </h4>
+            </div>
+            <div class="col-8 my-auto align-middle">
+              <i class="far fa-times-circle link-danger fs-1"></i>
+            </div>
+          </div>
+        </li>
+     
+        
 
-
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Rate:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">$<%=selectedLoad.rate%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Commodity:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">
-                <%=selectedLoad.commodity%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Weight:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">
-                <%=selectedLoad.weight%> lbs
-              </p>
-            </div>
-          </div>
-        </li>
       </ul>
     </div>
     <div class="col-8 p-0">
       <div id='map'></div>
     </div>
   </div>
+
+
+
+</div>
 
 
 
