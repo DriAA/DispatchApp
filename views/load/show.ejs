@@ -1,220 +1,266 @@
 <%- include("../../partials/load-map/header.ejs")%>
-<span class="d-none brokerId"><%=selectedLoad.id%></span>
+  <span class="d-none brokerId"><%=selectedLoad.id%></span>
 
-<div class="container">
+  <div class="container">
+    <div class="row">
+      <div class="col-4 p-0">
+        <div class="accordion" id="accordionLoadDetails">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="LoadDetails">
+              <button class="accordion-button bg-light fw-bold" type="button" data-bs-toggle="collapse"
+                data-bs-target="#LoadDetailsOne" aria-expanded="true" aria-controls="collapseOne">
+                Load Details
+              </button>
+            </h2>
+            <div id="LoadDetailsOne" class="accordion-collapse collapse show" aria-labelledby="LoadDetails">
+              <div class="accordion-body p-0">
+                <ul class="list-group">
+                  <!-- Load Milage -->
+                  <li class="list-group-item border-start-0 border-end-0 rounded-0">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Miles:</p>
+                      </div>
+                      <div class="col-8">
+                        <p class="mb-0">
+                          <%=selectedLoad.miles%> (estimated)
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Pickup Date -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Pickup Date:</p>
+                      </div>
+                      <div class="col-8 my-auto">
+                        <p class="mb-0">
+                          <%=selectedLoad.dates.pickup%>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Delivery Date -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Delivery Date:</p>
+                      </div>
+                      <div class="col-8 my-auto">
+                        <p class="mb-0 ">
+                          <%=selectedLoad.dates.delivery%>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Load ID -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Load ID:</p>
+                      </div>
+                      <div class="col-8">
+                        <p class="mb-0">
+                          <%=selectedLoad.loadID%>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Load PO -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Load PO:</p>
+                      </div>
+                      <div class="col-8">
+                        <p class="mb-0">
+                          <%=selectedLoad.loadPO%>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Load Rate -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Rate:</p>
+                      </div>
+                      <div class="col-8">
+                        <p class="mb-0">$<%=selectedLoad.rate%>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Load Commodity -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Commodity:</p>
+                      </div>
+                      <div class="col-8">
+                        <p class="mb-0">
+                          <%=selectedLoad.commodity%>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Load Type -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Load Type:</p>
+                      </div>
+                      <div class="col-8">
+                        <p class="mb-0">
+                          <%=selectedLoad.type%>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Load Weight -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Weight:</p>
+                      </div>
+                      <div class="col-8">
+                        <p class="mb-0">
+                          <%=selectedLoad.weight%> lbs
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Load Driver -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Driver:</p>
+                      </div>
+                      <div class="col-8">
+                        <p class="mb-0">
+                          <%=selectedLoad.driver%>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Load Notes -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="fw-bold mb-2">
+                          Notes
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="card col-notes">
+                          <span class="p-2">
+                            <%=selectedLoad.driver%>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
 
-  <div class="row">
-    <div class="col-4 border p-0">
-      <ul class="list-group">
-        <!-- Load Details -->
-        <li class="list-group-item bg-light ps-3">
-          <h3>Load Details</h3>
-        </li>
-        <!-- Load Milage -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Miles:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">
-                <%=selectedLoad.miles%> (estimated)
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Pickup Date -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Pickup Date:</p>
-            </div>
-            <div class="col-8 my-auto">
-              <p class="mb-0">
-                <%=selectedLoad.dates.pickup%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Delivery Date -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Delivery Date:</p>
-            </div>
-            <div class="col-8 my-auto">
-              <p class="mb-0 ">
-                <%=selectedLoad.dates.delivery%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Load ID -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Load ID:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">
-                <%=selectedLoad.loadID%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Load PO -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Load PO:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">
-                <%=selectedLoad.loadPO%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Load Rate -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Rate:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">$<%=selectedLoad.rate%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Load Commodity -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Commodity:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">
-                <%=selectedLoad.commodity%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Load Type -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Load Type:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">
-                <%=selectedLoad.type%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Load Weight -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Weight:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">
-                <%=selectedLoad.weight%> lbs
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Load Driver -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-4">
-              <p class="m-0 fw-bold">Driver:</p>
-            </div>
-            <div class="col-8">
-              <p class="mb-0">
-                <%=selectedLoad.driver%>
-              </p>
-            </div>
-          </div>
-        </li>
-        <!-- Load Notes -->
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-12">
-              <div class="fw-bold mb-2">
-                Notes
+                </ul>
               </div>
             </div>
-            <div class="col-12">
-              <div class="card col-notes">
-                <span class="p-2">
-                  <%=selectedLoad.driver%>
-                </span>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="LoadStatus">
+              <button class="accordion-button bg-light fw-bold collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#LoadDetailsTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Load Status
+              </button>
+            </h2>
+            <div id="LoadDetailsTwo" class="accordion-collapse collapse" aria-labelledby="LoadStatus">
+              <div class="accordion-body p-0">
+                <ul class="list-group">
+                  <!-- Mark Completed -->
+                  <li class="list-group-item border-start-0 border-end-0 rounded-0 py-3">
+                    <div class="row">
+                      <div class="col-6 my-auto align-middle">
+                        <h4 class="fw-bold my-auto">
+                          Completed
+                        </h4>
+                      </div>
+                      <div class="col-6 my-auto align-middle">
+                        <i class="far fa-times-circle link-danger fs-1"></i>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Invoice Completed -->
+                  <li class="list-group-item border-start-0 border-end-0 py-3">
+                    <div class="row">
+                      <div class="col-6 my-auto align-middle">
+                        <h4 class="fw-bold my-auto">
+                          Invoice Sent:
+                        </h4>
+                      </div>
+                      <div class="col-6 my-auto align-middle">
+                        <i class="far fa-times-circle link-danger fs-1"></i>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Bol Completed -->
+                  <li class="list-group-item border-start-0 border-end-0 py-3">
+                    <div class="row">
+                      <div class="col-6 my-auto align-middle">
+                        <h4 class="fw-bold my-auto">
+                          Bols Obtained:
+                        </h4>
+                      </div>
+                      <div class="col-6 my-auto align-middle">
+                        <i class="far fa-times-circle link-danger fs-1"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-        </li>
 
-        <!-- Load Status -->
-        <li class="list-group-item bg-light ps-3">
-          <h3>Load Status</h3>
-        </li>
-        <!-- Mark Completed -->
-        <li class="list-group-item py-3">
-          <div class="row">
-            <div class="col-4 my-auto align-middle">
-              <h4 class="fw-bold my-auto">
-                Completed
-              </h4>
-            </div>
-            <div class="col-8 my-auto align-middle">
-              <i class="far fa-times-circle link-danger fs-1"></i>
-            </div>
-          </div>
-        </li>
-        <!-- Invoice Completed -->
-        <li class="list-group-item py-3">
-          <div class="row">
-            <div class="col-4 my-auto align-middle">
-              <h4 class="fw-bold my-auto">
-                Invoice Sent:
-              </h4>
-            </div>
-            <div class="col-8 my-auto align-middle">
-              <i class="far fa-times-circle link-danger fs-1"></i>
-            </div>
-          </div>
-        </li>
-        <!-- Bol Completed -->
-        <li class="list-group-item py-3">
-          <div class="row">
-            <div class="col-4 my-auto align-middle">
-              <h4 class="fw-bold my-auto">
-                Bols Obtained:
-              </h4>
-            </div>
-            <div class="col-8 my-auto align-middle">
-              <i class="far fa-times-circle link-danger fs-1"></i>
-            </div>
-          </div>
-        </li>
-     
-        
+        </div>
+      </div>
+      <div class="col-8 p-0">
+        <div class="accordion" id="accordionMapDetails">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="MapDetails">
+              <button class="accordion-button bg-light fw-bold" type="button" data-bs-toggle="collapse"
+                data-bs-target="#MapDetailsOne" aria-expanded="true" aria-controls="collapseOne">
+                Map View
+              </button>
+            </h2>
+            <div id="MapDetailsOne" class="accordion-collapse collapse show" aria-labelledby="MapDetails">
+              <div class="accordion-body p-0">
 
-      </ul>
-    </div>
-    <div class="col-8 p-0">
-      <div id='map'></div>
+
+                <div id='map'></div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="InternalNotes">
+              <button class="accordion-button bg-light fw-bold collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#MapDetailsTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Internal Notes
+              </button>
+            </h2>
+            <div id="MapDetailsTwo" class="accordion-collapse collapse" aria-labelledby="InternalNotes">
+              <div class="accordion-body">
+
+                <!-- Insert New Code here -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
-
-
-
-</div>
-
-
 
 
   <p class="lead">
@@ -224,7 +270,7 @@
 
 
   <script>
-    let loadID = document.querySelector('.brokerId').innerHTML;
+    let loadID = document.querySelector('.brokerId').innerHTML.trim();
     let loadURL = `/app/api/load/${loadID}`;
     function routerCenter(arr) {
       let totalArr = [0, 0];
@@ -260,7 +306,6 @@
         return response.json();
       })
       .then((data) => {
-
         // Try Function
         southWest = getSouthwestern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
         northEast = getNorthEastern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
@@ -321,7 +366,6 @@
         }
 
       });
-
 
   </script>
 
