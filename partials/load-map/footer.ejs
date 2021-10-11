@@ -1,4 +1,106 @@
 </section>
+
+<script>
+    let loadID = document.querySelector('.brokerId').innerHTML.trim();
+    let loadURL = `/app/api/load/${loadID}`;
+    function routerCenter(arr) {
+      let totalArr = [0, 0];
+      for (let i = 0; i < arr.length; i++) {
+        totalArr[0] = totalArr[0] + arr[i][0]
+        totalArr[1] = totalArr[1] + arr[i][1]
+      }
+      totalArr[0] = (totalArr[0] / arr.length)
+      totalArr[1] = (totalArr[1] / arr.length)
+      return totalArr
+    }
+    function getSouthwestern(c1, c2) {
+      North = Math.max(c1[0], c2[0])
+      South = Math.min(c1[0], c2[0])
+      East = Math.max(c1[1], c2[1])
+      West = Math.min(c1[1], c2[1])
+      return [South, West]
+    }
+
+    function getNorthEastern(c1, c2) {
+      North = Math.max(c1[0], c2[0])
+      South = Math.min(c1[0], c2[0])
+      East = Math.max(c1[1], c2[1])
+      West = Math.min(c1[1], c2[1])
+      return [North, East]
+    }
+
+
+
+
+    fetch(loadURL)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        // Try Function
+        southWest = getSouthwestern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
+        northEast = getNorthEastern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
+
+
+        mapboxgl.accessToken = 'pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA';
+        const map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: routerCenter(data.stop[0].route.geometry.coordinates),
+          zoom: 10,
+          interactive: false
+        });
+        map.on('load', () => {
+          map.addSource('route', {
+            'type': 'geojson',
+            'data': {
+              'type': 'Feature',
+              'properties': {},
+              'geometry': {
+                'type': 'LineString',
+                'coordinates': data.stop[0].route.geometry.coordinates
+              }
+            }
+          });
+          map.addLayer({
+            'id': 'route',
+            'type': 'line',
+            'source': 'route',
+            'layout': {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            'paint': {
+              'line-color': '#3074B9',
+              'line-width': 8
+            }
+          });
+        });
+
+        map.fitBounds([
+          southWest, // southwestern corner of the bounds
+          northEast // northeastern corner of the bounds
+        ], { padding: 100 });
+
+        for (let route of data.stop) {
+
+          // Create a default Marker and add it to the map.
+          const marker1 = new mapboxgl.Marker()
+            .setLngLat(route.pickup.geometry.coordinates)
+            .addTo(map);
+          // Create a default Marker and add it to the map.
+          const marker2 = new mapboxgl.Marker()
+            .setLngLat(route.delivery.geometry.coordinates)
+            .addTo(map);
+
+
+        }
+
+      });
+
+</script>
+
+
 <script>
 function toggleNav() {
     if(document.getElementById("mySidenav").style.width == "250px"){
@@ -9,7 +111,14 @@ function toggleNav() {
 }
 </script>  
 
+<script>
+    var myModal = document.getElementById('myModal')
+    var myInput = document.getElementById('myInput')
 
+    myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+    })
+</script>
 
 </body>
 </html>

@@ -1,4 +1,17 @@
 <%- include("../../partials/load-map/header.ejs")%>
+  <div class="bg-light border border-end-0 border-start-0 mb-3">
+    <div class="container py-2 text-end">
+      <form action="" class="d-inline">
+        <button type="submit" class="btn btn-success">Generate Invoice</button>
+      </form>
+      <form action="" class="d-inline">
+        <button type="submit" class="btn btn-warning">Edit</button>
+      </form>
+      <form action="" class="d-inline">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
   <span class="d-none brokerId"><%=selectedLoad.id%></span>
 
   <div class="container">
@@ -14,6 +27,24 @@
             </h2>
             <div id="LoadDetailsOne" class="accordion-collapse collapse show" aria-labelledby="LoadDetails">
               <div class="accordion-body p-0">
+                <div class="row p-3">
+                  <div class="col-12 fs-6">
+                    <i class="fas fa-map-marker-alt text-success"></i> <span class="text-muted">Origin</span>
+                  </div>
+                  <div class="col-12 fs-5">
+                    <%= selectedLoad.stop[0].pickup.city %>, <%= selectedLoad.stop[0].pickup.state %> 
+                  </div>
+                </div>
+                <div class="row pt-2 p-3">
+
+                  <div class="col-12 fs-6">
+                    <i class="fas fa-map-marker-alt text-danger"></i> <span class="text-muted">Destination</span>
+                  </div>
+                  <div class="col-12 fs-5">
+                    <%= selectedLoad.stop[selectedLoad.stop.length-1].delivery.city %>, <%= selectedLoad.stop[selectedLoad.stop.length-1].delivery.state %> 
+                  </div>
+
+                </div>
                 <ul class="list-group">
                   <!-- Load Milage -->
                   <li class="list-group-item border-start-0 border-end-0 rounded-0">
@@ -50,6 +81,19 @@
                       <div class="col-8 my-auto">
                         <p class="mb-0 ">
                           <%=selectedLoad.dates.delivery%>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- Broker Details -->
+                  <li class="list-group-item border-start-0 border-end-0 ">
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="m-0 fw-bold">Broker:</p>
+                      </div>
+                      <div class="col-8 my-auto">
+                        <p class="mb-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <%=selectedLoad.broker.id.name%>  <i class="fa fa-info-circle fs-6 text-primary ms-1" aria-hidden="true"></i>
                         </p>
                       </div>
                     </div>
@@ -155,7 +199,7 @@
                       <div class="col-12">
                         <div class="card col-notes">
                           <span class="p-2">
-                            <%=selectedLoad.driver%>
+                            <%=selectedLoad.notes%>
                           </span>
                         </div>
                       </div>
@@ -166,15 +210,14 @@
               </div>
             </div>
           </div>
-
           <div class="accordion-item">
             <h2 class="accordion-header" id="LoadStatus">
-              <button class="accordion-button bg-light fw-bold collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#LoadDetailsTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <button class="accordion-button bg-light fw-bold" type="button" data-bs-toggle="collapse"
+                data-bs-target="#LoadDetailsTwo" aria-expanded="true" aria-controls="collapseTwo">
                 Load Status
               </button>
             </h2>
-            <div id="LoadDetailsTwo" class="accordion-collapse collapse" aria-labelledby="LoadStatus">
+            <div id="LoadDetailsTwo" class="accordion-collapse collapse show" aria-labelledby="LoadStatus">
               <div class="accordion-body p-0">
                 <ul class="list-group">
                   <!-- Mark Completed -->
@@ -220,7 +263,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <div class="col-8 p-0">
@@ -244,15 +286,77 @@
 
           <div class="accordion-item">
             <h2 class="accordion-header" id="InternalNotes">
-              <button class="accordion-button bg-light fw-bold collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#MapDetailsTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <button class="accordion-button bg-light fw-bold" type="button" data-bs-toggle="collapse"
+                data-bs-target="#MapDetailsTwo" aria-expanded="true" aria-controls="collapseTwo">
                 Internal Notes
               </button>
             </h2>
-            <div id="MapDetailsTwo" class="accordion-collapse collapse" aria-labelledby="InternalNotes">
-              <div class="accordion-body">
+            <div id="MapDetailsTwo" class="accordion-collapse collapse show" aria-labelledby="InternalNotes">
+              <div class="accordion-body p-0">
 
                 <!-- Insert New Code here -->
+                <ul id="internalNotes" class="list-group border-0">
+                  <li class="list-group-item px-5 ">
+                    <p class="load">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam quod ut sapiente eligendi, labore reprehenderit.
+                    </p>
+                    <div>
+                      <p class="fw-bold d-inline fs-6">
+                        Username
+                      </p>
+                      <p class="text-muted lead fs-6">
+                        10/11/2021 2:28PM
+                      </p>
+                    </div>
+                  </li>
+                  <li class="list-group-item px-5 ">
+                    <p class="load">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam quod ut sapiente eligendi, labore reprehenderit.
+                    </p>
+                    <div>
+                      <p class="fw-bold d-inline fs-6">
+                        Username
+                      </p>
+                      <p class="text-muted lead fs-6">
+                        10/11/2021 2:28PM
+                      </p>
+                    </div>
+                  </li>
+                  <li class="list-group-item px-5 ">
+                    <p class="load">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam quod ut sapiente eligendi, labore reprehenderit.
+                    </p>
+                    <div>
+                      <p class="fw-bold d-inline fs-6">
+                        Username
+                      </p>
+                      <p class="text-muted lead fs-6">
+                        10/11/2021 2:28PM
+                      </p>
+                    </div>
+                  </li>
+                  <li class="list-group-item px-5 ">
+                    <p class="load">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam quod ut sapiente eligendi, labore reprehenderit.
+                    </p>
+                    <div>
+                      <p class="fw-bold d-inline fs-6">
+                        Username
+                      </p>
+                      <p class="text-muted lead fs-6">
+                        10/11/2021 2:28PM
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+                <div class="bg-light px-5 py-4">
+                  <h5 class="fw-bold mb-3">Leave a Comment</h5>
+                  <form action="">
+                    <textarea name="" id="" rows="5" class="form-control"></textarea>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                  </form>
+
+                </div>
               </div>
             </div>
           </div>
@@ -269,104 +373,111 @@
 
 
 
-  <script>
-    let loadID = document.querySelector('.brokerId').innerHTML.trim();
-    let loadURL = `/app/api/load/${loadID}`;
-    function routerCenter(arr) {
-      let totalArr = [0, 0];
-      for (let i = 0; i < arr.length; i++) {
-        totalArr[0] = totalArr[0] + arr[i][0]
-        totalArr[1] = totalArr[1] + arr[i][1]
-      }
-      totalArr[0] = (totalArr[0] / arr.length)
-      totalArr[1] = (totalArr[1] / arr.length)
-      return totalArr
-    }
-    function getSouthwestern(c1, c2) {
-      North = Math.max(c1[0], c2[0])
-      South = Math.min(c1[0], c2[0])
-      East = Math.max(c1[1], c2[1])
-      West = Math.min(c1[1], c2[1])
-      return [South, West]
-    }
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title" id="exampleModalLabel">Broker Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <!-- Broker Name -->
+          <div class="row mb-3">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Name:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.broker.id.name%>
+              </p>
+            </div>
+          </div>
+          <!-- Broker MC -->
+          <div class="row mb-3">
+            <div class="col-4">
+              <p class="m-0 fw-bold">MC:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.broker.id.mc%>
+              </p>
+            </div>
+          </div>
+          <!-- Broker DOT -->
+          <div class="row mb-3">
+            <div class="col-4">
+              <p class="m-0 fw-bold">DOT:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.broker.id.dot%>
+              </p>
+            </div>
+          </div>
+          <!-- Broker Email -->
+          <div class="row mb-3">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Email:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.broker.id.email%>
+              </p>
+            </div>
+          </div>
+          <!-- Broker Toll Free -->
+          <div class="row mb-3">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Toll Free:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.broker.id.tollFree%>
+              </p>
+            </div>
+          </div>
+          <!-- Broker Mobile -->
+          <div class="row mb-3">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Mobile:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.broker.id.mobile%>
+              </p>
+            </div>
+          </div>
+          <!-- Broker Fax -->
+          <div class="row mb-3">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Fax:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.broker.id.fax%>
+              </p>
+            </div>
+          </div>
+          <!-- Broker Website -->
+          <div class="row mb-3">
+            <div class="col-4">
+              <p class="m-0 fw-bold">Website:</p>
+            </div>
+            <div class="col-8">
+              <p class="mb-0">
+                <%=selectedLoad.broker.id.website%>
+              </p>
+            </div>
+          </div>
 
-    function getNorthEastern(c1, c2) {
-      North = Math.max(c1[0], c2[0])
-      South = Math.min(c1[0], c2[0])
-      East = Math.max(c1[1], c2[1])
-      West = Math.min(c1[1], c2[1])
-      return [North, East]
-    }
-
-
-
-
-    fetch(loadURL)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        // Try Function
-        southWest = getSouthwestern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
-        northEast = getNorthEastern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
-
-
-        mapboxgl.accessToken = 'pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA';
-        const map = new mapboxgl.Map({
-          container: 'map',
-          style: 'mapbox://styles/mapbox/streets-v11',
-          center: routerCenter(data.stop[0].route.geometry.coordinates),
-          zoom: 10,
-          interactive: false
-        });
-        map.on('load', () => {
-          map.addSource('route', {
-            'type': 'geojson',
-            'data': {
-              'type': 'Feature',
-              'properties': {},
-              'geometry': {
-                'type': 'LineString',
-                'coordinates': data.stop[0].route.geometry.coordinates
-              }
-            }
-          });
-          map.addLayer({
-            'id': 'route',
-            'type': 'line',
-            'source': 'route',
-            'layout': {
-              'line-join': 'round',
-              'line-cap': 'round'
-            },
-            'paint': {
-              'line-color': '#3074B9',
-              'line-width': 8
-            }
-          });
-        });
-
-        map.fitBounds([
-          southWest, // southwestern corner of the bounds
-          northEast // northeastern corner of the bounds
-        ], { padding: 100 });
-
-        for (let route of data.stop) {
-
-          // Create a default Marker and add it to the map.
-          const marker1 = new mapboxgl.Marker()
-            .setLngLat(route.pickup.geometry.coordinates)
-            .addTo(map);
-          // Create a default Marker and add it to the map.
-          const marker2 = new mapboxgl.Marker()
-            .setLngLat(route.delivery.geometry.coordinates)
-            .addTo(map);
-
-
-        }
-
-      });
-
-  </script>
-
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   <%- include("../../partials/load-map/footer.ejs")%>

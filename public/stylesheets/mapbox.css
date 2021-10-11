@@ -32,3 +32,13 @@ body {
   min-height: 100px;
   background-color: lightgoldenrodyellow;
 }
+
+
+#internalNotes{
+  max-height: 325px;
+  overflow-y: auto;
+}
+
+#MapDetailsTwo form textarea{
+  width: 100%;
+}
