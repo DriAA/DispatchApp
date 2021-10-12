@@ -101,13 +101,15 @@ router.get('/:companyID/load', isLoggedIn, validateCompany, async (req, res) => 
     res.json('Load Route has been Successfully Hit.')
 })
 // Create 
-router.get('/:companyID/load/new', isLoggedIn, validateCompany, async (req, res) => {
+router.get('/:companyID/load/new', isLoggedIn, validateCompany, async (req, res, next) => {
     return res.render('load/new', { selectedCompany })
 })
-router.post('/:companyID/load/new', isLoggedIn, validateCompany, async (req, res) => {
+router.post('/:companyID/load/new', isLoggedIn, validateCompany, async (req, res, next) => {
     // Map Box API
     // https://api.mapbox.com/geocoding/v5/mapbox.places/Tampa,%20Florida.json?&access_token=pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA
     let load = req.body.load
+    let foundBroker = await Broker.findById(req.body.load.broker.id)
+    load.broker.name = foundBroker.name
     let stops = req.body.load.stop
     for (let i = 0; i < stops.length; i++) {
 

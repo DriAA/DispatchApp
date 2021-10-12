@@ -13,7 +13,8 @@ const Loadschema = new Schema({
         id: {
             type: Schema.Types.ObjectId,
             ref: 'Broker'
-        }
+        },
+        name: String
     },
     dates:{
         pickup: String, 

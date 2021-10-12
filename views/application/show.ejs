@@ -1,8 +1,80 @@
 <%- include("../../partials/application/header.ejs")%>
     <div class="container my-5">
         <div class="pb-3">
-            <h1 class="display-6 lead">Dashboard for <%= selectedCompany.name %>
-            </h1>
+            <div class="row mx-2 pb-2 mb-5 border-bottom">
+                <div class="col-6 my-auto">
+                    <h1 class="display-6 lead">All Loads</h1>
+                </div>
+                <div class="col-6 text-end my-auto">
+                    <div class="input-group" id="loadSearch">
+                        <span class="input-group-text bg-light">Search By:</span>
+                        <select class="form-select" aria-label="Search Options">
+                            <option selected value="broker">Broker</option>
+                            <option value="driver">Driver</option>
+                            <option value="pickup">Pickup</option>
+                            <option value="delivery">Delivery</option>
+                            <option value="rate">Rate</option>
+                          </select>
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search Here">
+                        <span class="input-group-text bg-ligh" id="searchRemove">X</span>
+
+                      </div>
+                </div>
+            </div>
+        <%for(let load of selectedCompany.load){%>
+            <div class="row text-center border m-2 loadItem">
+        <!-- Pickup and Delivery -->
+        <div class="col-md-3 my-auto p-3">
+            <div class="row">
+                <div class="col-5">
+                    <i class="fas fa-map-marker-alt text-success"></i>
+                    <%=load.id.stop[0].pickup.city%>, <%=load.id.stop[0].pickup.state%> <br>
+                            <span class="text-muted">dd/mm/yyyy</span>
+                </div>
+                <div class="col-2">
+                    <i class="fas fa-arrow-circle-right"></i>
+                </div>
+                <div class="col-5">
+                    <i class="fas fa-map-marker-alt text-danger"></i>
+                    <%=load.id.stop[load.id.stop.length-1].delivery.city%>,
+                        <%=load.id.stop[load.id.stop.length-1].delivery.state%> <br>
+                            <span class="text-muted">dd/mm/yyyy</span>
+                </div>
+            </div>
+        </div>
+        <!-- Miles -->
+        <div class="col-md-2 my-auto">
+            <p class="m-0">
+                <%= load.id.miles %> Miles
+            </p>
+        </div>
+        <!-- Broker -->
+        <div class="col-md-2 my-auto">
+            <p class="m-0">
+                <%= load.id.broker.name%>
+            </p>
+        </div>
+        <!-- Driver -->
+        <div class="col-md-2 my-auto">
+            <p class="m-0 link-primary"><i class="fas fa-user"></i>
+                <%= load.id.driver%>
+            </p>
+        </div>
+        <!-- Rate -->
+        <div class="col-md-1 my-auto">
+            <p class="m-0">$ <%= load.id.rate%>
+            </p>
+        </div>
+        <!-- View Load -->
+        <div class="col-md-2 my-auto">
+            <a class="btn btn-outline-danger" href="/app/<%= selectedCompany._id%>/load/<%=load.id._id%>">View Load
+                Detail</a>
+        </div>
+            </div>
+        <%}%>
+
+
+            
             <p class="text-muted">Company - CRUD</p>
             <!-- Read -->
             <a class="btn btn-success" href="/app/<%=selectedCompany._id%>">View</a>
@@ -39,10 +111,10 @@
             <%for(let load of selectedCompany.load){%>
                 <div class="card">
                     <p class="lead"><%=load%>
-                    <a class="btn btn-primary d-block m-4" href="/app/<%=selectedCompany._id%>/load/<%=load.id._id%>">View Load</a>
+                    <a class="btn btn-primary d-block m-4" href="/app/<%=selectedCompany._id%>/load/<%=load%>">View Load</a>
                     </p>
                 </div>
-                <%}%>
+            <%}%>
         </div>
 
 
