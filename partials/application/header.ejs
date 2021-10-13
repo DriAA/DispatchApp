@@ -29,7 +29,7 @@
 
 
 
-          <a class="navbar-brand" href="/<%=selectedCompany._id%>"><%= selectedCompany.name%></a>
+          <a class="navbar-brand" href="/app/<%=selectedCompany._id%>"><%= selectedCompany.name%></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -37,9 +37,14 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  List companies
+                  <% if(selectedCompany){ %>
+                      <%= selectedCompany.name %> 
+                  <% } else {%>
+                      View All Companies
+                  <% } %> 
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/app/">View All</a>
                   <%for(let i=0;i<loggedUser.company.length;i++){%>
                     <li>
                       <a class="dropdown-item" href="/app/<%=loggedUser.company[i].id._id%>"><%= loggedUser.company[i].id.name%></a>
@@ -105,12 +110,11 @@
 
                 <div id="mySidenav" class="sidenav">
                   <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
-                  <a href="#">About</a>
+                  <a href="/app/<%=selectedCompany._id%>" class="fs-6 text-nowrap" ><%=selectedCompany.name%></a>
+                  <a href="/app/<%=selectedCompany._id%>/load ">Loads</a>
                   <a href="#">Services</a>
                   <a href="#">Clients</a>
                   <a href="#">Contact</a>
                 </div>
-
-
-
+                
 <section id='main'>

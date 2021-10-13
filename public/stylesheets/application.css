@@ -85,3 +85,17 @@ text-align: center;
 .link-primary{
   text-decoration: underline;
 }
+
+#loadCard a:hover{
+  background-color:#f5f5f5;
+}
+
+
+#revenueCard .card-body{
+  min-height: 325px;
+}
+
+#loadCard .card-body{
+  max-height: 325px;
+  overflow-y:auto;
+} 

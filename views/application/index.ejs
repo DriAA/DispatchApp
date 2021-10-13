@@ -1,59 +1,155 @@
 <%- include("../../partials/application/header.ejs")%>
-    <div class="container">
-
-
-      <p class="lead"><%=loggedUser.company%></p>
-        <h1 class="display-1 lead">Show All Companies</h1>
-        <p class="text-muted fs-4">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        </p>
-        <section class="row">
-            <div class="col-12 p-4">
-   
-                <div class="p-3 border rounded-3 bg-light mh-200">
-                    <div class="container">
-                        <h5 class="fs-3 lead">This Weeks Report</h5>
-                    </div>
-                    <div class="row row-cols-1 row-cols-md-3 h-100 m-auto text-center">
-                        <div class="col">
-                          <div class="card h-100">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="card h-100">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">This is a short card.</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="card h-100">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+  <div class="container">
+    <section class="row">
+      <div class="col-12 p-4">
+        <div class="p-3 border rounded-3 bg-light mh-200">
+          <div class="container">
+            <h5 class="fs-3 lead">This Weeks Report</h5>
+          </div>
+          <div class="row row-cols-1 row-cols-md-3 h-100 m-auto text-center">
+            <div class="col">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional content. This content is a little bit longer.</p>
                 </div>
+              </div>
             </div>
-            <div class="col-12 col-md-6 p-4">
-                <div class="p-3 border rounded-3 bg-light mh-200">Custom column padding</div>
+            <div class="col">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a short card.</p>
+                </div>
+              </div>
             </div>
-            <div class="col-12 col-md-6 p-4">
-                <div class="p-3 border rounded-3 bg-light mh-200">Custom column padding</div>
+            <div class="col">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional content.</p>
+                </div>
+              </div>
             </div>
-            <div class="col-12 col-md-6 p-4">
-                <div class="p-3 border rounded-3 bg-light mh-200">Custom column padding</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Load Card -->
+      <div class="col-12 col-md-6 p-4 " id="loadCard">
+        <div class="card mh-200" >
+          <!-- Card Header -->
+          <div class="card-header">
+            <div class="row">
+              <div class="col-6">
+                <div class="fs-5 lead">Five Most Recent Loads</div>
+              </div>
+              <div class="col-6 text-end my-auto">
+                <a href="/app/<%= selectedCompany._id%>/load"><i class="fas fa-arrow-right fs-5 m-auto align-middle"></i></a>
+              </div>
             </div>
-            <div class="col-12 col-md-6 p-4">
-                <div class="p-3 border rounded-3 bg-light mh-200">Custom column padding</div>
+
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+
+          <% for(let i = selectedCompany.load.length-1; i >= selectedCompany.load.length-5;i--){ %>
+            <% if(selectedCompany.load[i]){ let load =  selectedCompany.load[i] %>
+              <a href="/app/<%= selectedCompany._id %>/load/<%= load.id._id %>  " class="card m-2 text-dark text-decoration-none">
+                <!-- Load Card Head -->
+                  <div class="card-header">
+                    <div class="row">
+                      <!-- Load Rate -->
+                      <div class="col-4 text-center">
+                        Rate: $<%= load.id.rate %> 
+                      </div>
+                      <!-- Load Broker -->
+                      <div class="col-4 text-center">
+                        Broker: <%= load.id.broker.name %> 
+                      </div>
+                      <!-- Load Driver -->
+                      <div class="col-4 text-center">
+                        <i class="fas fa-user"></i> <%=load.id.driver.length > 5? `${load.id.driver.substring(0,5)}...`: load.id.driver;%> 
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Load Card Body -->
+                  <div class="card-body">
+                    <div class="row text-center">
+                      <!-- Pickup and Delivery -->
+                      <div class="col-12">
+                        <div class="row">
+                          <div class="col-5">
+                              <i class="fas fa-map-marker-alt text-success"></i>
+                              <%=load.id.stop[0].pickup.city%>, <%=load.id.stop[0].pickup.state%> <br>
+                                      <span class="text-muted">dd/mm/yyyy</span>
+                          </div>
+                          <div class="col-2">
+                              <i class="fas fa-arrow-circle-right"></i>
+                          </div>
+                          <div class="col-5">
+                              <i class="fas fa-map-marker-alt text-danger"></i>
+                              <%=load.id.stop[load.id.stop.length-1].delivery.city%>,
+                                  <%=load.id.stop[load.id.stop.length-1].delivery.state%> <br>
+                                      <span class="text-muted">dd/mm/yyyy</span>
+                          </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+              </a>
+            <% } %>
+          <% } %> 
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Revenue -->
+      <div class="col-12 col-md-6 p-4" id="revenueCard">
+        <div class="card mh-200">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-6">
+                <div class="fs-5 lead">Revenue</div>
+              </div>
+              <div class="col-6 text-end my-auto">
+                <a href="/app/<%= selectedCompany._id%>/finance"><i class="fas fa-arrow-right fs-5 m-auto align-middle"></i></a>
+              </div>
             </div>
-        </section>
-    </div>
-<%- include("../../partials/application/footer.ejs")%>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <!-- Total Gross -->
+              <div class="col-12 text-center border-bottom pb-3">
+                <span class="fw-bold fs-2">Total Gross</span> <br>
+                <span class="fs-2">$<%= finance.sum %></span>
+              </div>
+              <!-- Dispatch Fee -->
+              <div class="col-12 py-3">
+                <div class="row">
+                  <div class="col-10"><span class="lead fw-bold">Dispatch Fee:</span></div>
+                  <div class="col-2"><span class="lead">$<%= (finance.sum * 0.06).toFixed(2) %> </span></div>
+                </div>
+              </div>
+              <!-- Factoring Company Fee -->
+              <div class="col-12 py-3">
+                <div class="row">
+                  <div class="col-10"><span class="fw-bold lead">Factoring Fee:</span></div>
+                  <div class="col-2"><span class="lead">$<%=(finance.sum * 0.0375).toFixed(2)%></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 p-4">
+        <div class="p-3 border rounded-3 bg-light mh-200">Custom column padding</div>
+      </div>
+      <div class="col-12 col-md-6 p-4">
+        <div class="p-3 border rounded-3 bg-light mh-200">Custom column padding</div>
+      </div>
+    </section>
+  </div>
+  <%- include("../../partials/application/footer.ejs")%>

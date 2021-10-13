@@ -37,7 +37,6 @@ router.get('/api/load/:loadID',async(req, res) =>{
 //! Company CRUD
 // Main
 router.get('/', isLoggedIn, (req, res) => {
-
     res.render('application/index', {selectedCompany: false})
 })
 // Create
@@ -55,7 +54,15 @@ router.post('/:companyID/new', isLoggedIn, validateCompany, async (req, res, nex
 })
 // Read
 router.get('/:companyID', isLoggedIn, validateCompany, async (req, res, next) => {
-    return res.render('application/show', { selectedCompany })
+    let finance
+    let totalSum = 0;
+    for (let load of selectedCompany.load){
+        totalSum = totalSum + parseFloat(load.id.rate)
+        finance = {sum: totalSum}
+    }
+
+    return res.render('application/index', { selectedCompany, finance})
+    
 });
 // Update
 router.get('/:companyID/edit', isLoggedIn, validateCompany, async (req, res) => {
@@ -98,7 +105,7 @@ router.delete("/:companyID", isLoggedIn, validateCompany, async (req, res) => {
 // ! Load CRUD
 // Main
 router.get('/:companyID/load', isLoggedIn, validateCompany, async (req, res) => {
-    res.json('Load Route has been Successfully Hit.')
+    return res.render('load/index', { selectedCompany })
 })
 // Create 
 router.get('/:companyID/load/new', isLoggedIn, validateCompany, async (req, res, next) => {
