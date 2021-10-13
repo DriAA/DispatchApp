@@ -54,8 +54,8 @@
           </div>
           <!-- Card Body -->
           <div class="card-body">
-
           <% for(let i = selectedCompany.load.length-1; i >= selectedCompany.load.length-5;i--){ %>
+
             <% if(selectedCompany.load[i]){ let load =  selectedCompany.load[i] %>
               <a href="/app/<%= selectedCompany._id %>/load/<%= load.id._id %>  " class="card m-2 text-dark text-decoration-none">
                 <!-- Load Card Head -->
@@ -101,6 +101,7 @@
                   </div>
               </a>
             <% } %>
+
           <% } %> 
           </div>
         </div>

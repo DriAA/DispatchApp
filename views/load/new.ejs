@@ -1,11 +1,5 @@
 <%- include("../../partials/load-map/header.ejs")%>
 
-
-
-<p class="lead">
-  <%= selectedCompany.broker%>
-</p>
-
   <div class="container border">
     <form class="p-3" action="/app/<%=selectedCompany._id%>/load/new" method="POST">
 
