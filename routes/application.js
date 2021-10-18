@@ -117,6 +117,7 @@ router.post('/:companyID/load/new', isLoggedIn, validateCompany, async (req, res
     // Map Box API
     // https://api.mapbox.com/geocoding/v5/mapbox.places/Tampa,%20Florida.json?&access_token=pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA
     let load = req.body.load
+    load.postCreated =  new Date().toLocaleString();
     let foundBroker = await Broker.findById(req.body.load.broker.id)
     load.broker.name = foundBroker.name
     let stops = req.body.load.stop
@@ -157,7 +158,6 @@ router.post('/:companyID/load/new', isLoggedIn, validateCompany, async (req, res
     newLoad.save()
     foundCompany.load.push({ id: newLoad._id })
     foundCompany.save()
-
     return res.redirect(`/app/${foundCompany._id}/load/${newLoad._id}`)
 
 
@@ -165,14 +165,54 @@ router.post('/:companyID/load/new', isLoggedIn, validateCompany, async (req, res
 })
 //Read
 router.get('/:companyID/load/:loadID', isLoggedIn, validateCompany, validateLoad, async (req, res) => {
-    return res.render('load/show', { selectedCompany, selectedLoad })
+    let load = await Load.findById({_id: req.params.loadID})
+    load.postViewed = new Date().toLocaleString();
+    load.save
+    return res.render('load/show', { selectedCompany, selectedLoad: load })
 })
 // Update
 router.get('/:companyID/load/:loadID/edit', isLoggedIn, validateCompany, validateLoad, async (req, res) => {
     return res.render('load/edit', { selectedCompany, selectedLoad })
 })
 router.put("/:companyID/load/:loadID/edit", isLoggedIn, validateCompany, validateLoad, async (req, res) => {
-    let updatedLoad = await Load.findByIdAndUpdate({ _id: req.params.loadID }, { ...req.body.load })
+    let load =  req.body.load
+    load.postEdited =  new Date().toLocaleString();
+
+    let stops = req.body.load.stop
+    for (let i = 0; i < stops.length; i++) {
+
+        pickup = `${stops[i].pickup.city}, ${stops[i].pickup.state}`
+        delivery = `${stops[i].delivery.city}, ${stops[i].delivery.state}`
+        // set requests
+        const pickupURL = axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?&access_token=pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA`);
+        const deliveryURL = axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${delivery}.json?&access_token=pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA`);
+        await axios.all([pickupURL, deliveryURL]).then(axios.spread((...responses) => {
+        const responseOne = responses[0]
+        pickupGeometry = responseOne.data.features[0].geometry 
+        const responseTwo = responses[1]
+        deliveryGeometry = responseTwo.data.features[0].geometry 
+        })).catch(errors => {
+            res.json(errors)
+        })
+        load.stop[i].pickup.geometry = pickupGeometry
+        load.stop[i].delivery.geometry = deliveryGeometry
+
+       const routeURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${load.stop[i].pickup.geometry.coordinates};${load.stop[i].delivery.geometry.coordinates}?alternatives=false&geometries=geojson&steps=false&access_token=pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA`
+        await axios.get(routeURL)
+       .then((response) => {
+            load.stop[i].route = {
+                geometry: response.data.routes[0].geometry
+            } 
+       })
+       .catch((error) => {
+            res.status(404).json({error });
+            // stop further execution in this callback
+            return;
+        })
+    }  
+
+    let updatedLoad = await Load.findByIdAndUpdate({ _id: req.params.loadID }, { ...load })
+   
     req.flash('success', 'Load Has Been Updated!!')
     res.redirect(`/app/${req.params.companyID}`)
 })
@@ -212,7 +252,27 @@ router.post('/:companyID/broker/:brokerID/edit', isLoggedIn, validateCompany, (r
     return res.json(req.body)
 })
 
+// ! Finacne CRUD
+// Main
+router.get('/:companyID/finance', isLoggedIn, validateCompany, async (req, res) => {
+ 
+    let finance = {
+        data: selectedCompany,
+        sum: function(){
+            company = this.data;
+            let totalSum = 0
+            for(let load of company.load){
+                let numRate = parseFloat(load.id.rate)
+                totalSum = totalSum + numRate
+            }
+            return totalSum.toFixed(2)
+        }
+    }
 
+    console.log(finance.sum())
+    return res.json(selectedCompany)
+
+})
 
 
 

@@ -1,6 +1,7 @@
 //  Require Dependencies.
 const { ObjectId } = require("bson");
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema
 
 
@@ -18,7 +19,7 @@ const Loadschema = new Schema({
     },
     dates:{
         pickup: String, 
-        delivery: String
+        delivery: String 
     },
     rate: String,
     commodity: String,
@@ -74,7 +75,10 @@ const Loadschema = new Schema({
         }
 
     ],
-    note: String
+    note: String,
+    postCreated: String,
+    postViewed: String,
+    postEdited: String
 });
 
 

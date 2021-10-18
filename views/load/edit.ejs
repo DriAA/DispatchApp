@@ -1,103 +1,240 @@
 <%- include("../../partials/load-map/header.ejs")%>
 
-<p class="lead">
-    <span class="fw-bold d-block"> Selected Company: </span>
-    <%= selectedCompany%>
-</p>
-
-<p class="lead">
-    <span class="fw-bold d-block"> Selected Load: </span>
-    <%=selectedLoad%>
-</p>
 
 
-<form action="/app/<%=selectedCompany._id%>/load/<%=selectedLoad._id%>/edit?_method=PUT" method="POST" class="m-5">
-  <h1 class="display-4 lead mb-5">Edit Load for <%=selectedCompany.name%></h1>
-  <div class="row mb-3">
-    <label for="inputCompanyName" class="col-sm-2 col-form-label">Load ID:</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputCompanyName" name="load[loadID]" value="<%=selectedLoad.loadID%>">
-    </div>
-  </div>
-    <div class="row mb-3">
-      <label for="inputCompanyName" class="col-sm-2 col-form-label">Rate:</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputCompanyName" name="load[rate]" value="<%=selectedLoad.rate%>">
+<div class="container border">
+  <form class="p-3" action="/app/<%=selectedCompany._id%>/load/<%=selectedLoad._id%>/edit?_method=PUT"  method="POST">
+
+    <div class="row justify-content-between mb-5">
+      <div class="col-12  col-md-5 col-lg-4 text-sm-center text-md-start">
+
+        <!-- Add Button Broker -->
+        <div class="card p-5 text-center list-group-item-action card-addBroker active">
+          Add a Broker
+        </div>
+
+        <!-- Broker Selection -->
+        <div class="card border-0 card-SelectBroker d-none">
+          <div class="card-SelectBroker-Bg"></div>
+          <div class="brokerGroup border">
+            <ul class="list-group list-group-flush broker">
+              <%for(let broker of selectedCompany.broker){%>
+                <li class="list-group-item">
+                  <h5 class="fw-bold lead brokerName">
+                    <%=broker.id.name%>
+                  </h5>
+                  <p class=" fs-6 text-muted brokerId"><%=broker.id._id%></p>
+                </li>
+                <%}%>
+                  <li class="list-group-item">
+                    <p class="link-primary mb-0" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add Another
+                      Broker <i class="fas fa-plus"></i></p>
+                  </li>
+            </ul>
+
+          </div>
+        </div>
+
+
+        <!-- Details Card -->
+        <div class="card p-3 d-none brokerDetails text-start">
+          <!-- Name -->
+          <h5 class="fw-bold lead brokerName"></h5>
+          <input type="text" class="form-control brokerId" name="load[broker][id]">
+          <!-- Address -->
+          <p class="fs-6 lead mb-0">
+            <span class="address1"></span> <span class="address2"></span> <br>
+            <span class="city"></span>, <span class="state"></span> <span class="postal"></span>
+          </p>
+          <p class="mb-0 d-block link-primary differenBrokerBtn"><span>Choose a different Broker</span></p> 
+          <p id="edit-Details" class="mb-0 d-block link-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit <span class="edit-brokerName"></span></p>
+        </div>
+
+
       </div>
-    </div>
-    <div class="row mb-3">
-      <label for="inputMC" class="col-sm-2 col-form-label">Commodity:</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputMC" name="load[commodity]" value="<%=selectedLoad.commodity%>">
-      </div>
-    </div>
-    <div class="row mb-3">
-        <label for="inputMC" class="col-sm-2 col-form-label">Weight:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputMC" name="load[weight]" value="<%=selectedLoad.weight%>">
+      <div class="col-12 col-md-5 col-lg-4 text-sm-center text-md-end">
+        <div class="row mb-3">
+          <label for="inputCompanyName" class="col-4 col-md-6 col-lg-5 col-form-label">Load ID:</label>
+          <div class="col-6 col-md-6 col-lg-7">
+            <input type="text" class="form-control" id="inputCompanyName" name="load[loadID]" value="<%=selectedLoad.loadID%>">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="inputCompanyName" class="col-4 col-md-6 col-lg-5 col-form-label">PO #:</label>
+          <div class="col-6 col-md-6 col-lg-7">
+            <input type="text" class="form-control" id="inputCompanyName" name="load[loadPO]" value="<%=selectedLoad.loadPO%>">
+          </div>
         </div>
       </div>
-      <div class="row mb-5">
-        <label for="inputMC" class="col-sm-2 col-form-label">Miles:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputMC" name="load[miles]" value="<%=selectedLoad.miles%>">
+    </div>
+
+
+    <!-- Load Details -->
+    <div class="row">
+      <p class="text-muted lead fs-3 mt-5 pt-2 mb-2">Load Details</p>
+      <!-- Rate Input -->
+      <div class="col-12 mb-3">
+        <label for="inputRate" class="col-form-label lead">Rate:</label>
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input type="text" class="form-control" name="load[rate]" aria-label="Amount (to the nearest dollar)" value="<%=selectedLoad.rate%>">
         </div>
       </div>
 
-    <div class="row mb-3">
-        <label for="inptTaxID" class="col-sm-2 col-form-label">Trailer:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inptTaxID" name="load[trailer]" value="<%=selectedLoad.trailer%>">
+
+      <!-- Load Type Input -->
+      <span class="text-danger mt-3">Fix EJS Value for Load Type: Select</span>
+      <div class="col-12  mb-3">
+        <label for="loadType" class=" col-form-label lead">Load Type:</label>
+        <select class="form-select" id="loadType" name="load[type]">
+          <option selected value="Van">Van</option>
+          <option value="Reefer">Reefer</option>
+          <option value="Hot Shot">Hot Shot</option>
+          <option value="Flat Bed">Flat Bed</option>
+          <option value="Flat Bed">Other</option>
+        </select>
+      </div>
+
+
+      <!-- Commodity Input  -->
+      <div class="col-12 col-md-6 mb-3">
+        <label for="inputCommodity" class=" col-form-label lead">Commodity:</label>
+        <input type="text" class="form-control" id="inputCommodity" name="load[commodity]" value="<%=selectedLoad.commodity%>">
+      </div>
+
+
+      <!-- Weight Input  -->
+      <div class="col-12 col-md-6 mb-3">
+        <label for="inputWeight" class=" col-form-label lead">Weight:</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="inputWeight" name="load[weight]" value="<%=selectedLoad.weight%>">
+          <span class="input-group-text">lbs</span>
         </div>
+      </div>
+
+
+      <!-- Driver Input -->
+      <span class="text-danger">Fix EJS for Driver Input: Select</span>
+      <div class="col-12 mb-3">
+        <label for="loadDriver" class=" col-form-label lead">Driver:</label>
+        <select class="form-select" id="loadDriver" name="load[driver]">
+          <option selected>Open this select menu</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+          <option value="4">Add a new driver</option>
+        </select>
+      </div>
     </div>
-      <div class="row mb-3">
-        <label for="inptTaxID" class="col-sm-2 col-form-label">Trailer Length</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inptTaxID" name="load[length]" value="<%=selectedLoad.length%>">
+
+
+      <!-- pickup Details -->
+      <div class="row justify-content-between mt-5 mb-3">
+        <div class="col-12  col-md-5 text-sm-center text-md-start">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <label for="inputPickupDate" class=" col-form-label lead">Pickup Date:</label>
+              <input type="date" class="form-control" name="load[dates][pickup]" id="inputPickupDate" value="<%=selectedLoad.dates.pickup%>">
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="inputDeliveryDate" class=" col-form-label lead">Delvery Date:</label>
+              <input type="date" class="form-control" name="load[dates][delivery]" id="inputDeliveryDate" value="<%=selectedLoad.dates.delivery%>">
+            </div>
+          </div>
         </div>
-    </div>
-    <div class="row mb-5">
-        <label for="inputDot" class="col-sm-2 col-form-label">Temperature:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputDot" name="load[temperature]" value="<%=selectedLoad.temperature%>">
-        </div>
-      </div>
-      
-      <div class="row mb-5">
-        <label for="inputBilling" class="col-sm-2 col-form-label">Pickup Detail:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control mb-3" name="load[pickup][facility]" placeholder="Facility" value="<%=selectedLoad.pickup.facility%>">
-            <input type="text" class="form-control mb-3" name="load[pickup][address1]" placeholder="Address 1" value="<%=selectedLoad.pickup.address1%>">
-            <input type="text" class="form-control mb-3" name="load[pickup][address2]" placeholder="Address 2" value="<%=selectedLoad.pickup.address2%>">
-            <input type="text" class="form-control mb-3" name="load[pickup][city]" placeholder="city" value="<%=selectedLoad.pickup.city%>">
-            <input type="text" class="form-control mb-3" name="load[pickup][state]" placeholder="State" value="<%=selectedLoad.pickup.state%>">
-            <input type="text" class="form-control mb-3" name="load[pickup][postal]" placeholder="Postal" value="<%=selectedLoad.pickup.postal%>">
-            <input type="text" class="form-control" name="load[pickup][country]" placeholder="Country" value="<%=selectedLoad.pickup.country%>">
-        </div>
-      </div>
-      <div class="row mb-5">
-        <label for="inputBilling" class="col-sm-2 col-form-label">Delivery Detail:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control mb-3" name="load[delivery][facility]" placeholder="Facility" value="<%=selectedLoad.delivery.facility%>">
-            <input type="text" class="form-control mb-3" name="load[delivery][address1]" placeholder="Address 1" value="<%=selectedLoad.delivery.address1%>">
-            <input type="text" class="form-control mb-3" name="load[delivery][address2]" placeholder="Address 2" value="<%=selectedLoad.delivery.address2%>">
-            <input type="text" class="form-control mb-3" name="load[delivery][city]" placeholder="city" value="<%=selectedLoad.delivery.city%>">
-            <input type="text" class="form-control mb-3" name="load[delivery][state]" placeholder="State" value="<%=selectedLoad.delivery.state%>">
-            <input type="text" class="form-control mb-3" name="load[delivery][postal]" placeholder="Postal" value="<%=selectedLoad.delivery.postal%>">
-            <input type="text" class="form-control" name="load[delivery][country]" placeholder="Country" value="<%=selectedLoad.delivery.country%>">
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="inputMC" class="col-sm-2 col-form-label">Notes:</label>
-        <div class="col-sm-10">
-            <textarea class="form-control" id="exampleFormControlTextarea1" name="load[note]" rows="3"><%=selectedLoad.note%></textarea>
+        <div class="col-12 col-md-5 text-sm-center text-md-end">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <label for="inputMiles" class=" col-form-label lead">Total Miles:</label>
+              <input type="text" name="load[miles]" id="inputMiles" class="form-control" value="<%=selectedLoad.miles%>">
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="inputPickupDate" class=" col-form-label lead">Add new option:</label>
+              <div class="row">
+                <div class="col-6 text-end">
+                  <span class="btn btn-primary" id="optionBtn">Add</span>
+                </div>
+                <div class="col-6 text-start">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected value="1">Lane</option>
+                    <option value="2">Fee</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+
+      <!-- Address Table -->
+      <div class="addressesTable table-responsive border border-bottom-0 rounded-3">
+        <table class="table mb-0">
+          <thead class="bg-light">
+            <tr>
+              <th scope="col">Type</th>
+              <th scope="col">QT</th>
+              <th scope="col">Description</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- One -->
+            <tr>
+              <td class="type fw-bold">Load</td>
+              <td class="quantity">1</td>
+              <td class="description">
+                <div class="row">
+                  <!-- pickup -->
+                  <div class="col-12 col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-text">Pickup</span>
+                      <input type="text" aria-label="Pickup" class="form-control" placeholder="City" name="load[stop][1][pickup][city]" value="Tampa">
+                      <input type="text" aria-label="Delivery" class="form-control" placeholder="State" name="load[stop][1][pickup]][state]" value="FL">
+                    </div>
+                  </div>
+
+                  <!-- Delivery -->
+                  <div class="col-12 col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-text">Delivery</span>
+                      <input type="text" aria-label="First name" class="form-control" placeholder="City" name="load[stop][1][delivery][city]" value="Miami">
+                      <input type="text" aria-label="Last name" class="form-control" placeholder="State" name="load[stop][1][delivery][state]" value="FL">
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="align-middle action">
+                <i class="fas fa-trash-alt text-danger mt-2 deleteLane"></i>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+
+      <!-- Notes Tab -->
+      <div class="row my-3">
+        <div class="col-12">
+          <label for="inputMC" class="col-form-label lead">Notes:</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+            name="load[note]"><%=selectedLoad.note%></textarea>
+        </div>
+      </div>
+
+
+      <!-- Submit Buttons -->
       <div class="row">
-        <button class="btn btn-primary w-100 mb-3" type="submit">Submit</button>
-        <a href="/<%=selectedCompany._id%>/load/<%=selectedLoad._id%>" class="btn btn-secondary w-100">Go Back</a>
-</form>
+        <div class="col mt-4">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <a class="btn btn-secondary" href="/app/<%=selectedCompany._id%>">Return to menu</a>
+        </div>
+      </div>
+  </form>
 
 
 
+<!-- Custom JS -->
+<script src="/js/load.js"></script>
 <%- include("../../partials/load-map/footer.ejs")%>

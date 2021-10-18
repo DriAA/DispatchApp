@@ -1,16 +1,24 @@
 <%- include("../../partials/load-map/header.ejs")%>
   <div class="bg-light border border-end-0 border-start-0 mb-3">
-    <div class="container py-2 text-end">
-      <form action="" class="d-inline">
-        <button type="submit" class="btn btn-success">Generate Invoice</button>
-      </form>
-      <a class="btn btn-primary" href="/app/<%= selectedCompany._id%>/load/new ">Create New Load</a>
-      <form action="" class="d-inline">
-        <button type="submit" class="btn btn-warning">Edit</button>
-      </form>
-      <form action="" class="d-inline">
-        <button type="submit" class="btn btn-danger">Delete</button>
-      </form>
+    <div class="container py-2">
+      <div class="row">
+        <div class="col-6 my-auto">
+          <span class="text-muted fs-6 lead d-block">Created: <%=selectedLoad.postCreated%> </span>
+          <span class="text-muted fs-6 lead d-block">Last Updated: <%= selectedLoad.postEdited%> </span>
+          <span class="text-muted fs-6 lead d-block">Last Viewed: <%= selectedLoad.postViewed %> </span>
+        </div>
+        <div class="col-6 my-auto text-end">
+          <form action="" class="d-inline">
+            <button type="submit" class="btn btn-success">Generate Invoice</button>
+          </form>
+          <a class="btn btn-primary" href="/app/<%= selectedCompany._id%>/load/new ">Create New Load</a>
+            <a href='/app/<%= selectedCompany._id%>/load/<%=selectedLoad._id%>/edit' class="btn btn-warning ">Edit</a>
+          <form action="" class="d-inline">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+
     </div>
   </div>
   <span class="d-none brokerId"><%=selectedLoad.id%></span>
@@ -200,7 +208,7 @@
                       <div class="col-12">
                         <div class="card col-notes">
                           <span class="p-2">
-                            <%=selectedLoad.notes%>
+                            <%=selectedLoad.note%>
                           </span>
                         </div>
                       </div>
