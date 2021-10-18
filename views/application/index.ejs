@@ -57,7 +57,7 @@
           <% for(let i = selectedCompany.load.length-1; i >= selectedCompany.load.length-5;i--){ %>
 
             <% if(selectedCompany.load[i]){ let load =  selectedCompany.load[i] %>
-              <a href="/app/<%= selectedCompany._id %>/load/<%= load.id._id %>  " class="card m-2 text-dark text-decoration-none">
+              <a href="/app/<%= selectedCompany._id %>/load/<%= load.id._id %>" class="card m-2 text-dark text-decoration-none">
                 <!-- Load Card Head -->
                   <div class="card-header">
                     <div class="row">
@@ -156,7 +156,7 @@
                 <div class="fs-5 lead">Driver Roster</div>
               </div>
               <div class="col-6 text-end my-auto">
-                <a href="/app/<%= selectedCompany._id%>/drivers"><i class="fas fa-arrow-right fs-5 m-auto align-middle"></i></a>
+                <a href="/app/<%= selectedCompany._id%>/driver"><i class="fas fa-arrow-right fs-5 m-auto align-middle"></i></a>
               </div>
             </div>
           </div>
@@ -184,7 +184,7 @@
                 <div class="fs-5 lead">Notifications</div>
               </div>
               <div class="col-6 text-end my-auto">
-                <a href="/app/<%= selectedCompany._id%>/notifcations"><i class="fas fa-arrow-right fs-5 m-auto align-middle"></i></a>
+                <a href="/app/<%=selectedCompany._id%>/notification"><i class="fas fa-arrow-right fs-5 m-auto align-middle"></i></a>
               </div>
             </div>
           </div>
