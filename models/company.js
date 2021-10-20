@@ -40,6 +40,14 @@ const CompanySchema = new Schema({
                 ref: 'Broker'
             }
         }
+    ],
+    driver:[
+        {
+            id:{
+                type: Schema.Types.ObjectId,
+                ref: "Driver"
+            }
+        }
     ]
     
 });

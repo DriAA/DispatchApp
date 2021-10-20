@@ -1,0 +1,171 @@
+<%- include("../../partials/driver/header.ejs")%>
+    <div class="container my-5">
+        <div class="shadow card bg-light">
+            <div class="card-header">
+                <h1 class="lead display-6">Add New Driver</h1>
+            </div>
+            <div class="card-body w-50 m-auto">
+                <form action="">
+                    <!-- Personal Information -->
+                    <section class="border-start border-primary mt-2 ps-3 mb-5">
+                        <!-- Header -->
+                        <h6 class="fs-4 lead fw-bold mb-3 ">
+                            Personal Information
+                        </h6>
+                        <!-- First Name -->
+                        <div class="row mb-3">
+                            <label for="driverFirstName" class="col-sm-2 col-form-label">First Name</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="driverFirstName" placeholder="John" name="driver[firstName]" required>
+                            </div>
+                        </div>
+                        <!-- Last Name -->
+                        <div class="row mb-3">
+                            <label for="driverLastName" class="col-sm-2 col-form-label">Last Name</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="driverLastName" placeholder="Smith" name="driver[lastName]" required>
+                            </div>
+                        </div>
+                        <!-- Date of Birth -->
+                        <div class="row mb-3 my-auto">
+                            <label for="driverDOB" class="col-sm-2 col-form-label">Date of Birth</label>
+                            <div class="col-sm-10 my-auto">
+                                <input type="date" class="form-control" name="driver[DOB]" id="driverDOB" required>
+                            </div>
+                        </div>
+                        <!-- Driver Image URL -->
+                        <div class="row mb-3 my-auto">
+                            <label for="driverImage" class="col-sm-2 col-form-label">Driver Image</label>
+                            <div class="col-sm-10 my-auto">
+                              <input type="text" class="form-control" id="driverImage" placeholder="URL" name="driver[driverImage]" required>
+                            </div>
+                        </div>
+                        <!--Mobile -->
+                        <div class="row mb-3 my-auto">
+                            <label for="driverMobile" class="col-sm-2 col-form-label">Mobile Phone</label>
+                            <div class="col-sm-10 my-auto">
+                              <input type="text" class="form-control" id="driverImage" placeholder="000-000-0000" name="driver[mobile]" required>
+                            </div>
+                        </div>
+                        <!-- Driver Email-->
+                        <div class="row mb-3 my-auto">
+                            <label for="driverEmail" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10 my-auto">
+                              <input type="email" class="form-control" id="driverEmail" placeholder="JohnSmoth@email.com" name="driver[email]" required>
+                            </div>
+                        </div>                      
+                    </section>
+
+                    <!-- Home Address -->
+                    <section class="border-start border-success ps-3 mb-5">
+                        <!-- Header -->
+                        <h6 class="fs-4 lead fw-bold mb-3 ">
+                            Home Address
+                        </h6>
+                        <!-- Address 1-->
+                        <div class="row mb-3">
+                            <label for="address1" class="col-sm-2 col-form-label">Address</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="address1" placeholder="1234 Main St." name="driver[address][address1]" required>
+                            </div>
+                        </div> 
+                        <!-- Address 2-->
+                        <div class="row mb-3">
+                            <label for="address2" class="col-sm-2 col-form-label">Address 2</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="address2" placeholder="Room 405" name="driver[address][address2]" required>
+                            </div>
+                        </div>
+                        <!-- City-->
+                        <div class="row mb-3">
+                            <label for="city" class="col-sm-2 col-form-label">City</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="city" placeholder="Tampa" name="driver[address][city]" required>
+                            </div>
+                        </div>                                                
+                        <!-- State-->
+                        <div class="row mb-3">
+                            <label for="state" class="col-sm-2 col-form-label">State</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="state" placeholder="Florida" name="driver[address][state]" required>
+                            </div>
+                        </div>
+                        <!-- Postal-->
+                        <div class="row mb-3">
+                            <label for="psotal" class="col-sm-2 col-form-label">Postal</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="postal" placeholder="33406" name="driver[address][postal]" required>
+                            </div>
+                        </div>
+                        <!-- Country-->
+                        <div class="row mb-3">
+                            <label for="country" class="col-sm-2 col-form-label">Country</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="country" placeholder="United States" name="driver[address][country]" required>
+                            </div>
+                        </div>                                                                                
+                    
+                    </section>
+
+                    <!-- Employment Details -->
+                    <section class="border-start border-danger ps-3 mb-5">
+                        <!-- Header -->
+                        <h6 class="fs-4 lead fw-bold mb-3 ">
+                            Employment Details
+                        </h6>
+                        <!-- Date Joined -->
+                        <div class="row mb-3 my-auto">
+                            <label for="dateJoined" class="col-sm-2 col-form-label">Date Joined</label>
+                            <div class="col-sm-10 my-auto">
+                                <input type="date" class="form-control" name="driver[joinedCompany]" id="dateJoined" required>
+                            </div>
+                        </div>
+                        <!-- Driver Liscense-->
+                        <div class="row mb-3">
+                            <label for="driverLiscense" class="col-sm-2 col-form-label my-auto">Liscense Number</label>
+                            <div class="col-sm-10 my-auto">
+                              <input type="text" class="form-control" id="driverLiscense" placeholder="5541S49EVVSSE251" name="driver[liscenseNumber]" required>
+                            </div>
+                        </div>
+                        <!-- Employment ID -->
+                        <div class="row mb-3">
+                            <label for="employeeID" class="col-sm-2 col-form-label my-auto">employee ID</label>
+                            <div class="col-sm-10 my-auto">
+                              <input type="text" class="form-control" id="employeeID" placeholder="115we345ds" name="driver[employeeNumber]" required>
+                            </div>
+                        </div>
+                        <!-- Truck Number -->
+                        <div class="row mb-3">
+                            <label for="truckNumber" class="col-sm-2 col-form-label my-auto">Truck Number</label>
+                            <div class="col-sm-10 my-auto">
+                              <input type="text" class="form-control" id="truckNumber" placeholder="001" name="driver[truck][number]" required>
+                            </div>
+                        </div>                  
+                        <!-- Trailer Number -->
+                        <div class="row mb-3">
+                            <label for="trailerNumber" class="col-sm-2 col-form-label my-auto">Trailer Number</label>
+                            <div class="col-sm-10 my-auto">
+                              <input type="text" class="form-control" id="trailerNumber" placeholder="A-1014" name="driver[trailer][number]" required>
+                            </div>
+                        </div>          
+                        <!-- Trailer Type -->
+                        <div class="row mb-3">
+                            <label for="trailerType" class="col-sm-2 col-form-label my-auto">Trailer Type</label>
+                            <div class="col-sm-10 my-auto">
+                                <select class="form-select" aria-label="Truck Type" name="driver[trailer][type]" required>
+                                    <option selected value="PowerOnly">Power Only</option>
+                                    <option value="Reefer">Reefer</option>
+                                    <option value="Van">Van</option>
+                                    <option value="FlatBed">Flat Bed</option>
+                                    <option value="Hotshot">Hot Shot</option>
+                                  </select>
+                            </div>
+                        </div>
+                    </section>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+<%- include("../../partials/driver/footer.ejs")%>

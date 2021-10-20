@@ -21,9 +21,14 @@ const { features } = require('process');
 
 
 //! CRUD - Finance
+// Create
+router.get('/new',isLoggedIn, validateCompany, async (req, res, next) =>{
+    res.render('driver/new', {selectedCompany})
+})
+
 // Read
 router.get('/', isLoggedIn, validateCompany, async (req, res, next) => {
-    return res.json("Welcome to the Driver Router")
+    res.render('driver/index',{selectedCompany})
 });
 
 router.get('/:item', isLoggedIn, validateCompany, async (req, res, next) => {
