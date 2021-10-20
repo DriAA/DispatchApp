@@ -30,7 +30,7 @@ db.once("open", () => {
     console.log("Database connected!")
 })
 
-app.use(express.json());
+app.use(express.json({strict:false}));
 app.use(express.urlencoded({ extended: true }));
 
 app.engine('ejs', ejsMate)

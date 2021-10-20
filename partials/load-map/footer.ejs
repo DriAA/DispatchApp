@@ -21,6 +21,14 @@
       return [South, West]
     }
 
+    function findSmallest(arr, index){
+          let smallest = arr[0][index];
+          for(let nestedArr of arr){
+          if(nestedArr[index] < smallest){smallest = nestedArr[index]}
+          }
+        return smallest
+    }
+        
     function getNorthEastern(c1, c2) {
       North = Math.max(c1[0], c2[0])
       South = Math.min(c1[0], c2[0])
@@ -37,9 +45,28 @@
         return response.json();
       })
       .then((data) => {
-        // Try Function
-        southWest = getSouthwestern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
-        northEast = getNorthEastern(data.stop[0].pickup.geometry.coordinates, data.stop[0].delivery.geometry.coordinates)
+        // Try Function 
+        function findLargest(arr, index){
+          let largest = arr[0][index]
+          for(let nestedArr of arr){
+            largest = Math.max(largest, nestedArr[index])
+          }
+          return largest
+        }
+        SWCoord = []
+        for(info of data.stop){
+          SWCoord.push(getSouthwestern(info.pickup.geometry.coordinates,info.delivery.geometry.coordinates))
+        }
+
+        NECoord = []
+        for(info of data.stop){
+          NECoord.push(getNorthEastern(info.pickup.geometry.coordinates,info.delivery.geometry.coordinates))
+        }
+        northEast = [findLargest(NECoord,0),findLargest(NECoord,1)]
+        southWest = [findSmallest(SWCoord,0),findSmallest(SWCoord,1)]
+
+
+
 
 
         mapboxgl.accessToken = 'pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA';
@@ -51,31 +78,39 @@
           interactive: false
         });
         map.on('load', () => {
-          map.addSource('route', {
-            'type': 'geojson',
-            'data': {
-              'type': 'Feature',
-              'properties': {},
-              'geometry': {
-                'type': 'LineString',
-                'coordinates': data.stop[0].route.geometry.coordinates
+
+          for (let info of data.stop) {
+            // Add Source Details for each route
+            map.addSource(info._id, {
+              'type': 'geojson',
+              'data': {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                  'type': 'LineString',
+                  'coordinates': info.route.geometry.coordinates
+                }
               }
-            }
-          });
-          map.addLayer({
-            'id': 'route',
-            'type': 'line',
-            'source': 'route',
-            'layout': {
-              'line-join': 'round',
-              'line-cap': 'round'
-            },
-            'paint': {
-              'line-color': '#3074B9',
-              'line-width': 8
-            }
-          });
-        });
+            });
+            
+            // Add Line for each route
+            map.addLayer({
+              'id': info._id,
+              'type': 'line',
+              'source': info._id,
+              'layout': {
+                'line-join': 'round',
+                'line-cap': 'round'
+              },
+              'paint': {
+                'line-color': '#3074B9',
+                'line-width': 8
+              }
+            });
+
+
+
+          }});
 
         map.fitBounds([
           southWest, // southwestern corner of the bounds
@@ -83,18 +118,21 @@
         ], { padding: 100 });
 
         for (let route of data.stop) {
-
           // Create a default Marker and add it to the map.
-          const marker1 = new mapboxgl.Marker()
+          const marker1 = new mapboxgl.Marker({ "color": "#5cb85c" })
             .setLngLat(route.pickup.geometry.coordinates)
             .addTo(map);
           // Create a default Marker and add it to the map.
-          const marker2 = new mapboxgl.Marker()
+          const marker2 = new mapboxgl.Marker({"color": "#d9534f"})
             .setLngLat(route.delivery.geometry.coordinates)
             .addTo(map);
 
 
         }
+
+        
+
+
 
       });
 
@@ -110,15 +148,6 @@ function toggleNav() {
     } 
 }
 </script>  
-
-<script>
-    var myModal = document.getElementById('myModal')
-    var myInput = document.getElementById('myInput')
-
-    myModal.addEventListener('shown.bs.modal', function () {
-        myInput.focus()
-    })
-</script>
 
 </body>
 </html>

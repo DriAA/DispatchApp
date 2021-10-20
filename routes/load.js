@@ -81,7 +81,7 @@ router.post('/new', isLoggedIn, validateCompany, async (req, res, next) => {
 })
 //Read
 router.get('/:loadID', isLoggedIn, validateCompany, validateLoad, async (req, res) => {
-    let load = await Load.findById({ _id: req.params.loadID })
+    let load = await Load.findById({ _id: req.params.loadID }).populate('broker.id')
     load.postViewed = new Date().toLocaleString();
     load.save
     return res.render('load/show', { selectedCompany, selectedLoad: load })
