@@ -27,7 +27,10 @@
             </div>
             <% for(let driver of selectedCompany.driver){ %> 
                 <div class="row  border m-2 loadItem p-4">
-                    <p class="fw-bold my-auto"><%= driver.id.firstName %> <%= driver.id.lastName%> </p>
+                    <div class="col-2 my-auto">
+                        <a href="/app/<%= selectedCompany._id%>/driver/<%=driver.id._id%>  " class="link-primary mb-0"><i class="fas fa-user"></i> <%= driver.id.firstName%>  <%= driver.id.lastName  %> </a>
+                    </div>
+                    </div>
                 </div>
                 <p class="lead"><%=driver.id%> </p>
             <% } %> 

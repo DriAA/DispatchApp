@@ -23,6 +23,12 @@ const { features } = require('process');
 
 
 //! CRUD - Driver
+
+// Show
+router.get('/', isLoggedIn, validateCompany, async (req, res, next) => {
+    res.render('driver/index',{selectedCompany})
+});
+
 // Create
 router.get('/new',isLoggedIn, validateCompany, async (req, res, next) =>{
     res.render('driver/new', {selectedCompany})
@@ -39,13 +45,28 @@ router.post('/new', isLoggedIn, validateCompany, async (req, res) =>{
 })
 
 // Read
-router.get('/', isLoggedIn, validateCompany, async (req, res, next) => {
-    res.render('driver/index',{selectedCompany})
+router.get('/:driverID', isLoggedIn, validateCompany, async (req, res, next) => {
+    let foundDriver = await Driver.findById({_id: req.params.driverID})
+    return res.json(foundDriver)
 });
 
-router.get('/:item', isLoggedIn, validateCompany, async (req, res, next) => {
-    return res.json(`Welcome to the Driver Router, Displaying: ${req.params.item}`)
-});
+// Update
+// Create
+router.get('/:driverID/edit',isLoggedIn, validateCompany, async (req, res, next) =>{
+    let selectedDriver = await Driver.findById({_id: req.params.driverID})
+    res.render('driver/edit', {selectedCompany, selectedDriver})
+})
 
+router.post('/new', isLoggedIn, validateCompany, async (req, res) =>{
+    let foundCompany = await Company.findById({_id: req.params.companyID})
+    let newDriver = new Driver(req.body.driver)
+    newDriver.save()
+    console.log("New Driver: ", newDriver)
+    foundCompany.driver.push({id: newDriver._id})
+    foundCompany.save()
+    return res.redirect(`/app/${req.params.companyID}/driver`) 
+})
+
+// Update
 
 module.exports = router
