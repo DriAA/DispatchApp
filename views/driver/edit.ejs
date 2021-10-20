@@ -5,7 +5,7 @@
                 <h1 class="lead display-6">Edit Driver: <%= selectedDriver.firstName %> <%= selectedDriver.lastName %> </h1>
             </div>
             <div class="card-body w-50 m-auto">
-                <form action="/app/<%=selectedCompany._id%>/driver/new" method="POST">
+                <form action="/app/<%=selectedCompany._id%>/driver/<%=selectedDriver._id%>/edit?_method=PUT" method="POST">
                     <!-- Personal Information -->
                     <section class="border-start border-primary mt-2 ps-3 mb-5">
                         <!-- Header -->
@@ -16,42 +16,42 @@
                         <div class="row mb-3">
                             <label for="driverFirstName" class="col-sm-2 col-form-label">First Name</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" id="driverFirstName" placeholder="John" name="driver[firstName]" value="Adrian" required>
+                              <input type="text" class="form-control" id="driverFirstName" placeholder="John" name="driver[firstName]" value="<%= selectedDriver.firstName %>" required>
                             </div>
                         </div>
                         <!-- Last Name -->
                         <div class="row mb-3">
                             <label for="driverLastName" class="col-sm-2 col-form-label">Last Name</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" id="driverLastName" placeholder="Smith" name="driver[lastName]" value="Alvarez" required>
+                              <input type="text" class="form-control" id="driverLastName" placeholder="Smith" name="driver[lastName]" value="<%= selectedDriver.lastName %>" required>
                             </div>
                         </div>
                         <!-- Date of Birth -->
                         <div class="row mb-3 my-auto">
                             <label for="driverDOB" class="col-sm-2 col-form-label">Date of Birth</label>
                             <div class="col-sm-10 my-auto">
-                                <input type="date" class="form-control" name="driver[DOB]" id="driverDOB" value="2000-05-02" required>
+                                <input type="date" class="form-control" name="driver[DOB]" id="driverDOB" value="<%= selectedDriver.DOB %>" required>
                             </div>
                         </div>
                         <!-- Driver Image URL -->
                         <div class="row mb-3 my-auto">
                             <label for="driverImage" class="col-sm-2 col-form-label">Driver Image</label>
                             <div class="col-sm-10 my-auto">
-                              <input type="text" class="form-control" id="driverImage" placeholder="URL" name="driver[image]" value="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80" required>
+                              <input type="text" class="form-control" id="driverImage" placeholder="URL" name="driver[image]" value="<%= selectedDriver.image %>" required>
                             </div>
                         </div>
                         <!--Mobile -->
                         <div class="row mb-3 my-auto">
                             <label for="driverMobile" class="col-sm-2 col-form-label">Mobile Phone</label>
                             <div class="col-sm-10 my-auto">
-                              <input type="text" class="form-control" id="driverImage" placeholder="000-000-0000" name="driver[mobile]" value="5613068437" required>
+                              <input type="text" class="form-control" id="driverImage" placeholder="000-000-0000" name="driver[mobile]" value="<%= selectedDriver.mobile %>" required>
                             </div>
                         </div>
                         <!-- Driver Email-->
                         <div class="row mb-3 my-auto">
                             <label for="driverEmail" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10 my-auto">
-                              <input type="email" class="form-control" id="driverEmail" placeholder="JohnSmoth@email.com" name="driver[email]" value="adrian@gmail.com" required>
+                              <input type="email" class="form-control" id="driverEmail" placeholder="JohnSmoth@email.com" name="driver[email]" value="<%= selectedDriver.email %>" required>
                             </div>
                         </div>                      
                     </section>
@@ -66,42 +66,42 @@
                         <div class="row mb-3">
                             <label for="address1" class="col-sm-2 col-form-label">Address</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" id="address1" placeholder="1234 Main St." name="driver[address][address1]" value="3855 Dale Rd" required>
+                              <input type="text" class="form-control" id="address1" placeholder="1234 Main St." name="driver[address][address1]" value="<%= selectedDriver.address.address1 %>" required>
                             </div>
                         </div> 
                         <!-- Address 2-->
                         <div class="row mb-3">
                             <label for="address2" class="col-sm-2 col-form-label">Address 2</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" id="address2" placeholder="Room 405" name="driver[address][address2]" value="Suite 405" required>
+                              <input type="text" class="form-control" id="address2" placeholder="Room 405" name="driver[address][address2]" value="<%= selectedDriver.address.address2 %>" required>
                             </div>
                         </div>
                         <!-- City-->
                         <div class="row mb-3">
                             <label for="city" class="col-sm-2 col-form-label">City</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" id="city" placeholder="Tampa" name="driver[address][city]" value="West Palm Beach" required>
+                              <input type="text" class="form-control" id="city" placeholder="Tampa" name="driver[address][city]" value="<%= selectedDriver.address.city %>" required>
                             </div>
                         </div>                                                
                         <!-- State-->
                         <div class="row mb-3">
                             <label for="state" class="col-sm-2 col-form-label">State</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" id="state" placeholder="Florida" name="driver[address][state]" value="Florida" required>
+                              <input type="text" class="form-control" id="state" placeholder="Florida" name="driver[address][state]" value="<%= selectedDriver.address.state %>" required>
                             </div>
                         </div>
                         <!-- Postal-->
                         <div class="row mb-3">
                             <label for="psotal" class="col-sm-2 col-form-label">Postal</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" id="postal" placeholder="33406" name="driver[address][postal]" value="33406" required>
+                              <input type="text" class="form-control" id="postal" placeholder="33406" name="driver[address][postal]" value="<%= selectedDriver.address.postal %>" required>
                             </div>
                         </div>
                         <!-- Country-->
                         <div class="row mb-3">
                             <label for="country" class="col-sm-2 col-form-label">Country</label>
                             <div class="col-sm-10">
-                              <input type="text" class="form-control" id="country" placeholder="United States" name="driver[address][country]" value="United States" required>
+                              <input type="text" class="form-control" id="country" placeholder="United States" name="driver[address][country]" value="<%= selectedDriver.address.country %>" required>
                             </div>
                         </div>                                                                                
                     
@@ -117,35 +117,35 @@
                         <div class="row mb-3 my-auto">
                             <label for="dateJoined" class="col-sm-2 col-form-label">Date Joined</label>
                             <div class="col-sm-10 my-auto">
-                                <input type="date" class="form-control" name="driver[joinedCompany]" id="dateJoined" value="2021-10-20" required>
+                                <input type="date" class="form-control" name="driver[joinedCompany]" id="dateJoined" value="<%= selectedDriver.joinedCompany %>" required>
                             </div>
                         </div>
                         <!-- Driver Liscense-->
                         <div class="row mb-3">
                             <label for="driverLiscense" class="col-sm-2 col-form-label my-auto">Liscense Number</label>
                             <div class="col-sm-10 my-auto">
-                              <input type="text" class="form-control" id="driverLiscense" placeholder="5541S49EVVSSE251" name="driver[liscenseNumber]" value="2SDW565W5D1F" required>
+                              <input type="text" class="form-control" id="driverLiscense" placeholder="5541S49EVVSSE251" name="driver[liscenseNumber]" value="<%= selectedDriver.liscenseNumber %>" required>
                             </div>
                         </div>
                         <!-- Employment ID -->
                         <div class="row mb-3">
                             <label for="employeeID" class="col-sm-2 col-form-label my-auto">employee ID</label>
                             <div class="col-sm-10 my-auto">
-                              <input type="text" class="form-control" id="employeeID" placeholder="115we345ds" name="driver[employeeNumber]" value="FW5EW6QF3" required>
+                              <input type="text" class="form-control" id="employeeID" placeholder="115we345ds" name="driver[employeeNumber]" value="<%= selectedDriver.employeeNumber %>" required>
                             </div>
                         </div>
                         <!-- Truck Number -->
                         <div class="row mb-3">
                             <label for="truckNumber" class="col-sm-2 col-form-label my-auto">Truck Number</label>
                             <div class="col-sm-10 my-auto">
-                              <input type="text" class="form-control" id="truckNumber" placeholder="001" name="driver[truck][number]" value="545" required>
+                              <input type="text" class="form-control" id="truckNumber" placeholder="001" name="driver[truck][number]" value="<%= selectedDriver.truck.number %>" required>
                             </div>
                         </div>                  
                         <!-- Trailer Number -->
                         <div class="row mb-3">
                             <label for="trailerNumber" class="col-sm-2 col-form-label my-auto">Trailer Number</label>
                             <div class="col-sm-10 my-auto">
-                              <input type="text" class="form-control" id="trailerNumber" placeholder="A-1014" name="driver[trailer][number]" value="198875" required>
+                              <input type="text" class="form-control" id="trailerNumber" placeholder="A-1014" name="driver[trailer][number]" value="<%= selectedDriver.trailer.number %>" required>
                             </div>
                         </div>          
                         <!-- Trailer Type -->

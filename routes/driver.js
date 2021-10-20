@@ -51,22 +51,16 @@ router.get('/:driverID', isLoggedIn, validateCompany, async (req, res, next) => 
 });
 
 // Update
-// Create
 router.get('/:driverID/edit',isLoggedIn, validateCompany, async (req, res, next) =>{
     let selectedDriver = await Driver.findById({_id: req.params.driverID})
     res.render('driver/edit', {selectedCompany, selectedDriver})
 })
 
-router.post('/new', isLoggedIn, validateCompany, async (req, res) =>{
-    let foundCompany = await Company.findById({_id: req.params.companyID})
-    let newDriver = new Driver(req.body.driver)
-    newDriver.save()
-    console.log("New Driver: ", newDriver)
-    foundCompany.driver.push({id: newDriver._id})
-    foundCompany.save()
-    return res.redirect(`/app/${req.params.companyID}/driver`) 
+router.put("/:driverID/edit", isLoggedIn, validateCompany, async (req, res) => {
+    let selectedDriver = await Driver.findById({_id: req.params.driverID})
+    res.json({"Editing Driver: ": selectedDriver})
 })
 
-// Update
+
 
 module.exports = router
