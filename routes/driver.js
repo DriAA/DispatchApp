@@ -13,6 +13,8 @@ const User = require('../models/user')
 const Company = require('../models/company')
 const Load = require('../models/load');
 const Broker = require('../models/broker');
+const Driver = require('../models/driver')
+
 const { findOne } = require('../models/user');
 const load = require('../models/load');
 const { response } = require('express');
@@ -20,10 +22,20 @@ const { doesNotMatch } = require('assert');
 const { features } = require('process');
 
 
-//! CRUD - Finance
+//! CRUD - Driver
 // Create
 router.get('/new',isLoggedIn, validateCompany, async (req, res, next) =>{
     res.render('driver/new', {selectedCompany})
+})
+
+router.post('/new', isLoggedIn, validateCompany, async (req, res) =>{
+    let foundCompany = await Company.findById({_id: req.params.companyID})
+    let newDriver = new Driver(req.body.driver)
+    newDriver.save()
+    console.log("New Driver: ", newDriver)
+    foundCompany.driver.push({id: newDriver._id})
+    foundCompany.save()
+    return res.redirect(`/app/${req.params.companyID}/driver`) 
 })
 
 // Read

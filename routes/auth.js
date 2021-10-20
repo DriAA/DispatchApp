@@ -16,7 +16,7 @@ const User = require('../models/user')
 const Company = require('../models/company')
 const Load = require('../models/load')
 const Broker = require('../models/broker')
-
+const Driver = require('../models/driver')
 
 
 
@@ -83,6 +83,12 @@ router.post('/reset', async (req, res) => {
 
     await Broker.deleteMany({}).then(function () {
         console.log("All Brokers deleted"); // Success
+    }).catch(function (error) {
+        console.log(error); // Failure
+    });
+
+    await Driver.deleteMany({}).then(function () {
+        console.log("All Driver deleted"); // Success
     }).catch(function (error) {
         console.log(error); // Failure
     });

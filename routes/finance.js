@@ -26,6 +26,11 @@ router.get('/', isLoggedIn, validateCompany, async (req, res, next) => {
     return res.json("Welcome to the Finance Router")
 });
 
+router.get('/testing', isLoggedIn, validateCompany, async (req, res, next) => {
+    return res.render('finance/index',{selectedCompany})
+});
+
+
 router.get('/:item', isLoggedIn, validateCompany, async (req, res, next) => {
     return res.json(`Welcome to the Finance Router, Displaying: ${req.params.item}`)
 });

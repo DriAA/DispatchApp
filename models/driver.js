@@ -26,7 +26,7 @@ const DriverSchema = new Schema({
         number: String
     },
     trailer: {
-        type:String, 
+        equipment: String, 
         number: String
     },
     joinedCompany: String

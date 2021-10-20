@@ -25,9 +25,12 @@
                     </div>
                 </div>
             </div>
-            <%for(let load of selectedCompany.load){%>
-
-            <%}%>
+            <% for(let driver of selectedCompany.driver){ %> 
+                <div class="row  border m-2 loadItem p-4">
+                    <p class="fw-bold my-auto"><%= driver.id.firstName %> <%= driver.id.lastName%> </p>
+                </div>
+                <p class="lead"><%=driver.id%> </p>
+            <% } %> 
         </div>
     </div>
 
