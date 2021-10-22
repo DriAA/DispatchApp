@@ -26,13 +26,17 @@
                 </div>
             </div>
             <% for(let driver of selectedCompany.driver){ %> 
-                <div class="row  border m-2 loadItem p-4">
-                    <div class="col-2 my-auto">
-                        <a href="/app/<%= selectedCompany._id%>/driver/<%=driver.id._id%>  " class="link-primary mb-0"><i class="fas fa-user"></i> <%= driver.id.firstName%>  <%= driver.id.lastName  %> </a>
+                <div class="row border m-2 loadItem p-4 text-center mb-3">
+                    <div class="col-3 my-auto">
+                        <a href="/app/<%= selectedCompany._id%>/driver/<%=driver.id._id%>" class="link-primary mb-0"><i class="fas fa-user"></i> <%= driver.id.firstName%>  <%= driver.id.lastName  %> </a>
                     </div>
+                    <div class="col-2 my-auto"><%= driver.id.mobile%>  </div>
+                    <div class="col-2 my-auto"><%= driver.id.email%> </div>
+                    <div class="col-2 my-auto"> <span class="badge rounded-pill bg-success px-3">Active</span></div>
+                    <div class="col-3 my-auto"> 
+                        <a class="btn btn-outline-danger" href="/app/<%= selectedCompany._id%>/driver/<%=driver.id._id%>">More Info</a>
                     </div>
                 </div>
-                <p class="lead"><%=driver.id%> </p>
             <% } %> 
         </div>
     </div>

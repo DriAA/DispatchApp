@@ -100,6 +100,7 @@
                     </div>
                   </div>
               </a>
+
             <% } %>
 
           <% } %> 
@@ -162,13 +163,14 @@
           </div>
           <!-- Driver Body -->
           <div class="card-body">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Bob</li>
-              <li class="list-group-item">Rob</li>
-              <li class="list-group-item">John</li>
-              <li class="list-group-item">Jack</li>
-              <li class="list-group-item">Dri</li>
-            </ul>
+            <% for(let driver of selectedCompany.driver) {%>
+
+              <a class="card m-2 text-dark text-decoration-none p-3" href="/app/<%= selectedCompany._id %>/driver/<%=driver.id._id%>">
+                <%= driver.id.firstName %> <%= driver.id.lastName %> 
+              </a>
+
+            <% } %> 
+
           </div>
         </div>
       </div>

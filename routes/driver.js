@@ -38,7 +38,6 @@ router.post('/new', isLoggedIn, validateCompany, async (req, res) =>{
     let foundCompany = await Company.findById({_id: req.params.companyID})
     let newDriver = new Driver(req.body.driver)
     newDriver.save()
-    console.log("New Driver: ", newDriver)
     foundCompany.driver.push({id: newDriver._id})
     foundCompany.save()
     return res.redirect(`/app/${req.params.companyID}/driver`) 
@@ -46,8 +45,8 @@ router.post('/new', isLoggedIn, validateCompany, async (req, res) =>{
 
 // Read
 router.get('/:driverID', isLoggedIn, validateCompany, async (req, res, next) => {
-    let foundDriver = await Driver.findById({_id: req.params.driverID})
-    return res.json(foundDriver)
+    let selectedDriver = await Driver.findById({_id: req.params.driverID})
+    res.render('driver/show', {selectedDriver,selectedCompany})
 });
 
 // Update
@@ -55,10 +54,28 @@ router.get('/:driverID/edit',isLoggedIn, validateCompany, async (req, res, next)
     let selectedDriver = await Driver.findById({_id: req.params.driverID})
     res.render('driver/edit', {selectedCompany, selectedDriver})
 })
-
 router.put("/:driverID/edit", isLoggedIn, validateCompany, async (req, res) => {
-    let selectedDriver = await Driver.findById({_id: req.params.driverID})
-    res.json({"Editing Driver: ": selectedDriver})
+    let selectedDriver = await Driver.findByIdAndUpdate({_id: req.params.driverID},{...req.body.driver})
+    selectedDriver.save()
+    res.redirect(`/app/${req.params.companyID}/driver/${req.params.driverID}`)
+})
+
+// Delete
+router.delete('/:driverID', isLoggedIn, validateCompany, async (req, res, next)=>{
+    for (let i = 0; i < selectedCompany.driver.length; i++) {
+        if (selectedCompany.driver[i].id._id.toString() == req.params.driverID) {
+            console.log("We Found a match!!")
+            await Company.findByIdAndUpdate(
+                { _id: mongoose.Types.ObjectId(req.params.companyID) },
+                { $pull: { 'driver': selectedCompany.driver[i] } }
+            )
+        }
+    }
+    // Delete Company from DB.
+    await Driver.findByIdAndDelete({ _id: req.params.driverID })
+    // Find Newupdated User.
+    UpdatedUser = await User.findById({ _id: loggedUser._id })
+    res.redirect(`/app/${req.params.companyID}`)
 })
 
 
