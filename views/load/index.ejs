@@ -68,11 +68,10 @@
                     <div class="col-md-2 my-auto">
                         <% if(load.id.driver.id == null){ %>
                             <a class="btn btn-warning" href="/app/<%= selectedCompany._id %>/notification ">Assign a Driver</a>
-                            <%= load.id.driver %> 
                         <% } else { %>
-                            <p class="m-0 link-primary"><i class="fas fa-user"></i>
-                                <span class="driver"><%= load.id.driver.id.name%></span>
-                            </p>
+                            <a class="m-0 link-primary" href="/app/<%= selectedCompany._id %>/driver/<%= load.id.driver.id %>"><i class="fas fa-user"></i>
+                                <span class="driver"><%= load.id.driver.firstName%> <%= load.id.driver.lastName%></span>
+                            </a>
                         <% } %>
 
                     </div>

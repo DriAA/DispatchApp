@@ -29,7 +29,10 @@ const Loadschema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Driver',
             require: false
-        }
+        },
+        firstName: String, 
+        lastName: String
+
     },
     miles: String,
     type: String,

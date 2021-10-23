@@ -20,6 +20,7 @@ module.exports = {
             for (let company of userCompanies) {
                 if (company.id._id.toString() == req.params.companyID) {
                     selectedCompany = await Company.findById(company.id).populate('load.id').populate('broker.id').populate('driver.id')
+
                     return next()
                 }
             }

@@ -18,6 +18,7 @@ const load = require('../models/load');
 const { response } = require('express');
 const { doesNotMatch } = require('assert');
 const { features } = require('process');
+const driver = require('../models/driver');
 
 
 // ! Load CRUD
@@ -41,7 +42,16 @@ router.post('/new', isLoggedIn, validateCompany, async (req, res, next) => {
     if(req.body.load.driver.id == 'undecided'){
         console.log('No Driver Selected');
         load.driver.id = null
+        load.driver.firstName = null,
+        load.driver.lastName = null
+    }else{
+        console.log("Driver has been selected")
+        load.driver.id = req.body.load.driver.id
+        let foundDriver = await driver.findById({_id: req.body.load.driver.id})
+        load.driver.firstName = foundDriver.firstName;
+        load.driver.lastName = foundDriver.lastName;
     }
+    
 
     for (let i = 0; i < stops.length; i++) {
 
