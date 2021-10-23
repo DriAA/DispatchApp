@@ -35,7 +35,8 @@ module.exports = {
     validateLoad: async (req, res, next) => {
         for (let load of selectedCompany.load) {
             if (load.id._id.toString() == req.params.loadID) {
-                selectedLoad = await Load.findById(req.params.loadID).populate('broker.id')
+                selectedLoad = await Load.findById(req.params.loadID).populate('broker.id').populate('driver.id')
+
                 return next()
             }
         }

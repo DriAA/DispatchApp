@@ -192,7 +192,11 @@
                       </div>
                       <div class="col-8">
                         <p class="mb-0">
-                          <%=selectedLoad.driver%>
+                          <% if(selectedLoad.driver.id ==  null){ %>
+                             No Driver Selected
+                          <% } else {%> 
+                            <%=selectedLoad.driver.id.firstName%> <%=selectedLoad.driver.id.lastName%> <a href="/app/<%= selectedCompany._id %>/driver/<%= selectedLoad.driver.id._id %>"> <i class="fas fa-info-circle"></i></a>
+                          <% } %> 
                         </p>
                       </div>
                     </div>
@@ -483,4 +487,148 @@
     </div>
   </div>
 </div>
+
+
+
+
+<script>
+  let loadID = document.querySelector('.brokerId').innerHTML.trim();
+  let loadURL = `/app/api/load/${loadID}`;
+  function routerCenter(arr) {
+    let totalArr = [0, 0];
+    for (let i = 0; i < arr.length; i++) {
+      totalArr[0] = totalArr[0] + arr[i][0]
+      totalArr[1] = totalArr[1] + arr[i][1]
+    }
+    totalArr[0] = (totalArr[0] / arr.length)
+    totalArr[1] = (totalArr[1] / arr.length)
+    return totalArr
+  }
+  function getSouthwestern(c1, c2) {
+    North = Math.max(c1[0], c2[0])
+    South = Math.min(c1[0], c2[0])
+    East = Math.max(c1[1], c2[1])
+    West = Math.min(c1[1], c2[1])
+    return [South, West]
+  }
+
+  function findSmallest(arr, index){
+        let smallest = arr[0][index];
+        for(let nestedArr of arr){
+        if(nestedArr[index] < smallest){smallest = nestedArr[index]}
+        }
+      return smallest
+  }
+      
+  function getNorthEastern(c1, c2) {
+    North = Math.max(c1[0], c2[0])
+    South = Math.min(c1[0], c2[0])
+    East = Math.max(c1[1], c2[1])
+    West = Math.min(c1[1], c2[1])
+    return [North, East]
+  }
+
+
+
+
+  fetch(loadURL)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      // Try Function 
+      function findLargest(arr, index){
+        let largest = arr[0][index]
+        for(let nestedArr of arr){
+          largest = Math.max(largest, nestedArr[index])
+        }
+        return largest
+      }
+      SWCoord = []
+      for(info of data.stop){
+        SWCoord.push(getSouthwestern(info.pickup.geometry.coordinates,info.delivery.geometry.coordinates))
+      }
+
+      NECoord = []
+      for(info of data.stop){
+        NECoord.push(getNorthEastern(info.pickup.geometry.coordinates,info.delivery.geometry.coordinates))
+      }
+      northEast = [findLargest(NECoord,0),findLargest(NECoord,1)]
+      southWest = [findSmallest(SWCoord,0),findSmallest(SWCoord,1)]
+
+
+
+
+
+      mapboxgl.accessToken = 'pk.eyJ1Ijoib2xpdmVvaWx6IiwiYSI6ImNrcHEwbnNncTA4cDYyb2xlcWkxaHV3YW8ifQ.3C8_2v2XELxosKAN472hkA';
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: routerCenter(data.stop[0].route.geometry.coordinates),
+        zoom: 10,
+        interactive: false
+      });
+      map.on('load', () => {
+
+        for (let info of data.stop) {
+          // Add Source Details for each route
+          map.addSource(info._id, {
+            'type': 'geojson',
+            'data': {
+              'type': 'Feature',
+              'properties': {},
+              'geometry': {
+                'type': 'LineString',
+                'coordinates': info.route.geometry.coordinates
+              }
+            }
+          });
+          
+          // Add Line for each route
+          map.addLayer({
+            'id': info._id,
+            'type': 'line',
+            'source': info._id,
+            'layout': {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            'paint': {
+              'line-color': '#3074B9',
+              'line-width': 8
+            }
+          });
+
+
+
+        }});
+
+      map.fitBounds([
+        southWest, // southwestern corner of the bounds
+        northEast // northeastern corner of the bounds
+      ], { padding: 100 });
+
+      for (let route of data.stop) {
+        // Create a default Marker and add it to the map.
+        const marker1 = new mapboxgl.Marker({ "color": "#5cb85c" })
+          .setLngLat(route.pickup.geometry.coordinates)
+          .addTo(map);
+        // Create a default Marker and add it to the map.
+        const marker2 = new mapboxgl.Marker({"color": "#d9534f"})
+          .setLngLat(route.delivery.geometry.coordinates)
+          .addTo(map);
+
+
+      }
+
+      
+
+
+
+    });
+
+</script>
+
+
+
   <%- include("../../partials/load-map/footer.ejs")%>

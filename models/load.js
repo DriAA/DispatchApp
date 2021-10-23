@@ -24,7 +24,13 @@ const Loadschema = new Schema({
     rate: String,
     commodity: String,
     weight: String,
-    driver: String,
+    driver: {
+        id: {
+            type: Schema.Types.ObjectId,
+            ref: 'Driver',
+            require: false
+        }
+    },
     miles: String,
     type: String,
     stop: [

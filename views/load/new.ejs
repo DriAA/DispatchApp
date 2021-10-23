@@ -1,7 +1,7 @@
 <%- include("../../partials/load-map/header.ejs")%>
 
   <div class="container border">
-    <form class="p-3" action="/app/<%=selectedCompany._id%>/load/new" method="POST">
+    <form class="p-3 " id="loadForm" action="/app/<%=selectedCompany._id%>/load/new" method="POST">
 
       <div class="row justify-content-between mb-5">
         <div class="col-12  col-md-5 col-lg-4 text-sm-center text-md-start">
@@ -115,12 +115,12 @@
         <!-- Driver Input -->
         <div class="col-12 mb-3">
           <label for="loadDriver" class=" col-form-label lead">Driver:</label>
-          <select class="form-select" id="loadDriver" name="load[driver]">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-            <option value="4">Add a new driver</option>
+          <select class="form-select" id="loadDriver" name="load[driver][id]">
+            <option selected value="undecided">Undecided</option>
+            <% for (let driver of selectedCompany.driver){ %> 
+              <option value="<%= driver.id._id %>"><%= driver.id.firstName %> </option>
+            <% } %> 
+
           </select>
         </div>
       </div>
@@ -225,7 +225,7 @@
         <!-- Submit Buttons -->
         <div class="row">
           <div class="col mt-4">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-success disabled" id="formSubmit">Submit</button>
             <a class="btn btn-secondary" href="/app/<%=selectedCompany._id%>">Return to menu</a>
           </div>
         </div>
@@ -534,6 +534,8 @@
 
 
 
+
 <!-- Custom JS -->
 <script src="/js/load.js"></script>
+
 <%- include("../../partials/load-map/footer.ejs")%>

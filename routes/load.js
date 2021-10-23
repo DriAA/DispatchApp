@@ -37,6 +37,12 @@ router.post('/new', isLoggedIn, validateCompany, async (req, res, next) => {
     let foundBroker = await Broker.findById(req.body.load.broker.id)
     load.broker.name = foundBroker.name
     let stops = req.body.load.stop
+
+    if(req.body.load.driver.id == 'undecided'){
+        console.log('No Driver Selected');
+        load.driver.id = null
+    }
+
     for (let i = 0; i < stops.length; i++) {
 
         pickup = `${stops[i].pickup.city}, ${stops[i].pickup.state}`
@@ -81,7 +87,7 @@ router.post('/new', isLoggedIn, validateCompany, async (req, res, next) => {
 })
 //Read
 router.get('/:loadID', isLoggedIn, validateCompany, validateLoad, async (req, res) => {
-    let load = await Load.findById({ _id: req.params.loadID }).populate('broker.id')
+    let load = await Load.findById({ _id: req.params.loadID }).populate('broker.id').populate('driver.id')
     load.postViewed = new Date().toLocaleString();
     load.save
     return res.render('load/show', { selectedCompany, selectedLoad: load })

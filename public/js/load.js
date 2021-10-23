@@ -108,10 +108,38 @@ function displayAPI(el){
 
             brokerSelect.classList.remove('active')
             detailsCard.classList.add('active')
-
-
           }, 50);
+
+        
+          
     })
+}
+
+function validator(){
+  let loadForm = document.getElementById('loadForm')
+  let inputForms = loadForm.getElementsByTagName('input')
+  let validateArr = []
+  
+  // Obtain all Inputs.
+  for(let item of inputForms){
+    validateArr.push(item.value.length > 0)
+  }
+  validateArr.push(loadForm.querySelector('textarea').innerHTML.length > 0)
+
+  console.log("Array: ",validateArr)
+  // Obtain Text Array.
+  let checker = arr => arr.every(v => v === true);
+  checker(validateArr)? document.getElementById('formSubmit').classList.remove('disabled'):document.getElementById('formSubmit').classList.add('disabled');
+
+ 
+}
+
+let loadForm = document.getElementById('loadForm')
+let inputForms = loadForm.getElementsByTagName('input')
+for(let i of inputForms){
+  i.addEventListener('keyup',()=>{
+    validator()
+  })
 }
 
 
