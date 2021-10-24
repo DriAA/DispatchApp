@@ -1,4 +1,5 @@
 ## Truck Dispatch App
+This Project is meant to help me better understand how to use [Mongo](https://github.com/mongodb/mongo) and display better analytical data to the user about how a freight company is operating.
 
 **Technology Used:** [Bootstrap](https://github.com/topics/bootstrap), [Javascript](https://github.com/topics/javascript), [Node.js](https://github.com/topics/node),
                       [Express.js](https://github.com/topics/express), [Mongo](https://github.com/mongodb/mongo)
@@ -7,7 +8,7 @@
  - [x] Implemented CRUD Operations with REST API.
  - [x] Call and Retrieve JSON API Data.
  - [x] Display Dynamic Maps for each load's pick up and delivery routes usings [MapBox](https://www.mapbox.com/).
- - [] Use Mongo's Aggregate Features to better display data.
+ - [ ] Use Mongo's Aggregate Features to better display data.
   
  
  **Current Features:** <br>
