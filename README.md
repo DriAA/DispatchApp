@@ -23,7 +23,7 @@ This Project is meant to help me better understand how to use [Mongo](https://gi
 
 
 **In Development Features:** <br>
-- Leave internaml Reviews for **Drivers**, **Brokers**, **Loads**.
+- Leave internal Reviews for **Drivers**, **Brokers**, **Loads**.
 - Upload Documents and Set **Load** status.
 - Generate Basic Invoice from **Load**.
 - Notify when No **Driver** is assigned, **Load** is Completed, Timer for when documents must be uploaded.
