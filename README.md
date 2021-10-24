@@ -4,9 +4,11 @@
                       [Express.js](https://github.com/topics/express), [Mongo](https://github.com/mongodb/mongo)
                       
  **Project Goals:** <br>
- - Implemented CRUD Operations with REST API.
- - Call and Retrieve JSON API Data.
- - Display Dynamic Maps for each load's pick up and delivery routes usings [MapBox](https://www.mapbox.com/).
+ - [x] Implemented CRUD Operations with REST API.
+ - [x] Call and Retrieve JSON API Data.
+ - [x] Display Dynamic Maps for each load's pick up and delivery routes usings [MapBox](https://www.mapbox.com/).
+ - [] Use Mongo's Aggregate Features to better display data.
+  
  
  **Current Features:** <br>
  - Added Generic Landing Page with multiple Pages.
@@ -17,6 +19,7 @@
  - Added **Load** Data Set.
  - Display Details about **Load** Dataset.
  - Display Details about **Driver** Dataset.
+
 
 **In Development Features:** <br>
 - Leave internaml Reviews for **Drivers**, **Brokers**, **Loads**.
