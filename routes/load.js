@@ -168,6 +168,12 @@ router.delete("/:loadID", isLoggedIn, validateCompany, validateLoad, async (req,
 })
 
 
+// ! Invoice
+router.get('/:loadID/invoice', isLoggedIn, validateCompany, validateLoad, async (req, res) => {
+    let load = await Load.findById({ _id: req.params.loadID }).populate('broker.id').populate('driver.id')
+    return  res.render('load/invoice',{selectedCompany, selectedLoad: load })
+})
+
 
 
 

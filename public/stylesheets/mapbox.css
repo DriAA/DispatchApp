@@ -42,3 +42,7 @@ body {
 #MapDetailsTwo form textarea{
   width: 100%;
 }
+
+.bg-darker{
+  background-color: rgb(212, 209, 209);
+}

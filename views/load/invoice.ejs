@@ -1,0 +1,79 @@
+<%- include("../../partials/load-map/header.ejs")%>
+
+<div class="container my-5">
+    <div class="shadow card bg-light invoice"> 
+        <div class="row text-end border-bottom m-0 p-4">
+            <div class="col-12">
+                <h1 class="display-5">INVOICE</h1>
+            </div>
+            <div class="col-12">
+                <!-- Company Name -->
+                <p class="fw-bold"><%=selectedCompany.name%></p>
+                <!-- Company Billing Address -->
+                <p class="lead fs-6">
+                    <span class="d-block"><%= selectedCompany.billing.address1 %></span>
+                    <span class="d-block"><%= selectedCompany.billing.address2 %></span>
+                    <span class="d-block"><%= selectedCompany.billing.city %>, <%= selectedCompany.billing.state %> <%= selectedCompany.billing.postal %></span>
+                    <span class="d-block"><%= selectedCompany.billing.country %></span>
+                </p>
+                <!-- Company Contact -->
+                <p class="lead fs-6">
+                    <span class="fw-bold d-block"><%= selectedCompany.contact.title %> </span>
+                    <span class="d-block"><%= selectedCompany.contact.firstName %> <%= selectedCompany.contact.lastName %></span>
+                    <span class="d-block"><%= selectedCompany.contact.email %></span>
+                    <span class="d-block"><%= selectedCompany.contact.mobile %></span> 
+                </p>
+            </div>
+        </div>
+        <div class="row  border-bottom p-4">
+            <div class="col-6">
+                    <span class="fw-bold text-muted  fs-6">Bill to</span>
+                    <span class="fw-bold fs-6 d-block"><%= selectedLoad.broker.name%></span>
+                    <p class="fs-6">
+                        <span class="d-block"><%= selectedLoad.broker.id.billing.address1 %></span>
+                        <span class="d-block"><%= selectedLoad.broker.id.billing.address2 %></span>
+                        <span class="d-block"><%= selectedLoad.broker.id.billing.city %>, <%= selectedLoad.broker.id.billing.state %> <%= selectedLoad.broker.id.billing.postal %></span>
+                        <span class="d-block"><%= selectedLoad.broker.id.billing.country %></span>
+                    </p>
+            </div>
+            <div class="col-6 fs-6">
+                <div class="row">
+                    <div class="col-6 text-end fw-bold">
+                        Invoice Number:
+                    </div>
+                    <div class="col-6">
+                        <%= selectedLoad.loadID %> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-end fw-bold">
+                        Invoice Date:
+                    </div>
+                    <div class="col-6">
+                        <%= (selectedLoad.postCreated).substring(0,8) %> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-end fw-bold">
+                        Payment Due:
+                    </div>
+                    <div class="col-6">
+                        <%= (selectedLoad.postCreated).substring(0,8) %> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-end fw-bold  bg-darker">
+                        Amount Due:
+                    </div>
+                    <div class="col-6 fw-bold  bg-darker">
+                        $<%=selectedLoad.rate%> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<%- include("../../partials/load-map/footer.ejs")%>

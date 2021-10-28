@@ -71,7 +71,7 @@
                       </div>
                       <!-- Load Driver -->
                       <div class="col-4 text-center">
-                        <i class="fas fa-user"></i> <%=load.id.driver.length > 5? `${load.id.driver.substring(0,5)}...`: load.id.driver;%> 
+                        <i class="fas fa-user"></i> <%=load.id.driver.length > 5? `${load.id.driver.substring(0,5)}...`: `${load.id.driver.firstName} ${ load.id.driver.lastName}` ;%> 
                       </div>
                     </div>
                   </div>
