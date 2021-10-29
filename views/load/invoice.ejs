@@ -1,7 +1,16 @@
 <%- include("../../partials/load-map/header.ejs")%>
 
-<div class="container my-5">
-    <div class="shadow card bg-light invoice"> 
+<div class="nav text-end mt-4">
+    <div class="container mx-5 fs-2">
+        <span class="mx-2">
+            <a href="" class="btn btn-danger"><i class="fas fa-download"></i> Download</a>
+        </span>
+        <a href="" class="btn btn-success"><i class="fas fa-print"></i> Print</a>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="shadow card bg-light m-auto" id="invoice" > 
         <div class="row text-end border-bottom m-0 p-4">
             <div class="col-12">
                 <h1 class="display-5">INVOICE</h1>
@@ -19,13 +28,14 @@
                 <!-- Company Contact -->
                 <p class="lead fs-6">
                     <span class="fw-bold d-block"><%= selectedCompany.contact.title %> </span>
-                    <span class="d-block"><%= selectedCompany.contact.firstName %> <%= selectedCompany.contact.lastName %></span>
-                    <span class="d-block"><%= selectedCompany.contact.email %></span>
+                    <span class="border-end pe-2 me-2 pe-2"><%= selectedCompany.contact.firstName %> <%= selectedCompany.contact.lastName %></span>
+                    <span class=""><%= selectedCompany.contact.email %></span>
                     <span class="d-block"><%= selectedCompany.contact.mobile %></span> 
                 </p>
             </div>
         </div>
-        <div class="row  border-bottom p-4">
+        <!-- Bill to and Invoice Details -->
+        <div class="row  border-bottom p-4 m-0 pe-0">
             <div class="col-6">
                     <span class="fw-bold text-muted  fs-6">Bill to</span>
                     <span class="fw-bold fs-6 d-block"><%= selectedLoad.broker.name%></span>
@@ -62,17 +72,84 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6 text-end fw-bold  bg-darker">
+                    <div class="col-6 text-end fw-bold  bg-lightv2">
                         Amount Due:
                     </div>
-                    <div class="col-6 fw-bold  bg-darker">
+                    <div class="col-6 fw-bold  bg-lightv2">
                         $<%=selectedLoad.rate%> 
                     </div>
                 </div>
             </div>
         </div>
-
-
+        <!-- Invoice Details -->
+        <div class="row">
+            <div class="col-12">
+                <div class="row bg-lightv3 m-0 p-2 fw-bold">
+                    <div class="col-6">
+                        Items
+                    </div>
+                    <div class="col-2 text-center">
+                        Quantity
+                    </div>
+                    <div class="col-2 text-center">
+                        Price
+                    </div>
+                    <div class="col-2 text-center">
+                        Amount
+                    </div>
+                </div>
+            </div>
+            <!-- Load -->
+            <div class="col-12">
+                <div class="row m-0 p-2">
+                    <div class="col-6">
+                        <span class="fw-bold d-block">Line Haul</span>
+                        <%= selectedLoad.stop[0].pickup.city %>, <%= selectedLoad.stop[0].pickup.state %> to <%= selectedLoad.stop[selectedLoad.stop.length-1].delivery.city %>, <%= selectedLoad.stop[selectedLoad.stop.length-1].delivery.state %>
+                    </div>
+                    <div class="col-2 text-center">
+                        1
+                    </div>
+                    <div class="col-2 text-center">
+                        $<%=parseInt(selectedLoad.rate).toFixed(2)%>
+                    </div>
+                    <div class="col-2 text-center">
+                        $<%=parseInt(selectedLoad.rate).toFixed(2)%>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-4">
+            <div class="col-12 text-end">
+                <div class="row">
+                    <div class="col-6"></div>
+                    <div class="col-6">
+                        <div class="row border-bottom border-3 pb-2">
+                            <div class="col-6 fw-bold">
+                                Total:
+                            </div>
+                            <div class="col-6">
+                                $<%=parseInt(selectedLoad.rate).toFixed(2)%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-end mt-2">
+                <div class="row">
+                    <div class="col-6"></div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-6 fw-bold">
+                                Amount Due:
+                            </div>
+                            <div class="col-6">
+                                $<%=parseInt(selectedLoad.rate).toFixed(2)%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

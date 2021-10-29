@@ -43,6 +43,15 @@ body {
   width: 100%;
 }
 
-.bg-darker{
+.bg-lightv2{
   background-color: rgb(212, 209, 209);
+}
+
+.bg-lightv3{
+  background-color: rgb(172, 172, 172);
+}
+
+#invoice{
+  width: 820px;
+  min-height: 1024px;
 }
