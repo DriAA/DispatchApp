@@ -71,6 +71,7 @@
                       </div>
                       <!-- Load Driver -->
                       <div class="col-4 text-center">
+                        <%= load.id.driver.id == null ? 'No Driver Selected!' : 'Driver Selected' %> 
                         <i class="fas fa-user"></i> <%=load.id.driver.length > 5? `${load.id.driver.substring(0,5)}...`: `${load.id.driver.firstName} ${ load.id.driver.lastName}` ;%> 
                       </div>
                     </div>

@@ -3,9 +3,9 @@
 <div class="nav text-end mt-4">
     <div class="container mx-5 fs-2">
         <span class="mx-2">
-            <a href="" class="btn btn-danger"><i class="fas fa-download"></i> Download</a>
+            <button id="download" class="btn btn-danger"><i class="fas fa-download"></i> Download</button>
         </span>
-        <a href="" class="btn btn-success"><i class="fas fa-print"></i> Print</a>
+        <button id="print" class="btn btn-success"><i class="fas fa-print"></i> Print</button>
     </div>
 </div>
 
@@ -152,5 +152,13 @@
         </div>
     </div>
 </div>
+
+
+<script>
+
+    document.getElementById('download').addEventListener('click',()=>{alert('Downloaded Invoice!')})
+    document.getElementById('print').addEventListener('click',()=>{alert('Printed Invoice!')})
+
+</script>
 
 <%- include("../../partials/load-map/footer.ejs")%>
