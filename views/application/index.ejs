@@ -1,41 +1,6 @@
 <%- include("../../partials/application/header.ejs")%>
   <div class="container">
     <section class="row">
-      <div class="col-12 p-4">
-        <div class="p-3 border rounded-3 bg-light mh-200">
-          <div class="container">
-            <h5 class="fs-3 lead">This Weeks Report</h5>
-          </div>
-          <div class="row row-cols-1 row-cols-md-3 h-100 m-auto text-center">
-            <div class="col">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a short card.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional content.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- Load Card -->
       <div class="col-12 col-md-6 p-4 " id="loadCard">
@@ -71,8 +36,11 @@
                       </div>
                       <!-- Load Driver -->
                       <div class="col-4 text-center">
-                        <%= load.id.driver.id == null ? 'No Driver Selected!' : 'Driver Selected' %> 
-                        <i class="fas fa-user"></i> <%=load.id.driver.length > 5? `${load.id.driver.substring(0,5)}...`: `${load.id.driver.firstName} ${ load.id.driver.lastName}` ;%> 
+                        <% if(load.id.driver.id != null){ %>
+                            <i class="fas fa-user me-2"></i> <%= `${load.id.driver.firstName} ${ load.id.driver.lastName}`%> 
+                        <% } else { %>
+                            <div class="fs-6 text-danger"><i class="fas fa-exclamation-circle me-2"></i>No Driver</div>  
+                        <% } %> 
                       </div>
                     </div>
                   </div>
@@ -200,7 +168,17 @@
           </div>
           <!-- Notification Body -->
           <div class="card-body">
-            <div class="alert alert-primary d-flex align-items-center" role="alert">
+            <% if(notifications){ %>
+              <% for( let warning of notifications.warning){ %> 
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                  <i class="fas fa-exclamation-circle fs-2 me-3"></i>
+                  <div>
+                    <%= warning.message %>
+                  </div>
+                </div>
+              <% } %> 
+            <% } %>
+            <!-- <div class="alert alert-primary d-flex align-items-center" role="alert">
               <i class="fas fa-info-circle fs-2 me-3"></i>
               <div>
                 An example alert with an icon
@@ -223,7 +201,7 @@
               <div>
                 An example danger alert with an icon
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

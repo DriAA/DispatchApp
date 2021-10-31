@@ -43,7 +43,30 @@ module.exports = {
         }
         req.flash('error', `Could not find load: ${req.params.loadID}`)
         return res.redirect(`/app/${req.params.companyID}`)
+    },
+
+    createNotifications: async( req, res, next)=>{
+        res.notifications = {
+            total: 0,
+            warning: [],
+            danger: [],
+            inform: []
+        }
+        for (let load of selectedCompany.load) {
+            if(load.id.driver.id == null){
+                noDriver = {
+                    load: load.id._id,
+                    type: 'warning',
+                    message: `No Driver has been assigned to load ${load.id.loadID}`
+                }
+                res.notifications.total =+ 1
+                res.notifications.warning.push(noDriver)
+            }
+        }
+
+         next()
     }
+
 }
 
 

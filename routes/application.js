@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
-const { isLoggedIn, validateCompany, validateLoad } = require('../utils/middleware');
+const { isLoggedIn, validateCompany, validateLoad, createNotifications } = require('../utils/middleware');
 const router = express.Router({mergeParams: true});
 const middleware = require("../utils/middleware")
 var axios = require('axios');
@@ -71,17 +71,20 @@ router.post('/:companyID/new', isLoggedIn, validateCompany, async (req, res, nex
     return res.redirect(`/app/${newCompany._id}`)
 })
 // Read
-router.get('/:companyID', isLoggedIn, validateCompany, async (req, res, next) => {
+router.get('/:companyID', isLoggedIn, validateCompany, createNotifications,  async (req, res, next) => {
+        let notifications = (res.notifications.total != 0 ? res.notifications : false)
         let finance = {sum:0}
         let totalSum = 0;
-
         for (let load of selectedCompany.load){
             totalSum = totalSum + parseFloat(load.id.rate)
             finance.sum = totalSum
-        }      
+        }
+          
+        console.log('res.notifications: ', res.notifications.total)
+        console.log('Notifications: ', notifications)
    
 
-    return res.render('application/index', { selectedCompany, finance})
+    return res.render('application/index', { selectedCompany, finance, notifications})
     
 });
 // Update
