@@ -1,0 +1,74 @@
+<script>    
+    const companyId = window.location.pathname.slice(5,window.location.pathname.length-8);
+    let companyAPI = `/app/api/finance/${companyId}`;
+
+
+
+  
+  fetch(companyAPI)
+    .then((response) => {
+      return response.json();
+    }).then((data)=>{
+        const itemArr = {
+            driver: 'Name',
+            amount: 000
+        }
+        const driversList = []
+        // Create Driver Roster.
+        for(let load of data.load){
+            let driverName = load.id.driver.firstName ===  null? 'Unaccounted': load.id.driver.firstName
+            let loadRevenue = Number(load.id.rate)
+
+            let driverIndex = driversList.findIndex((el)=> el.name == driverName)
+            if (driverIndex ===  -1){
+                driver = {
+                    totalLoads: +1,
+                    name: driverName,
+                    revenue: loadRevenue
+                }
+                driversList.push(driver)
+            } else {
+                let {totalLoads, revenue} = driversList[driverIndex]
+                driversList[driverIndex] = {...driversList[driverIndex], revenue: revenue + loadRevenue, totalLoads: totalLoads+1}
+            }
+        }
+
+        // Create Labels.
+        let chartLabels = []
+        let chartData = []
+        for(item of driversList){
+            console.log(item)
+            chartLabels.push(item.name)
+            chartData.push(item.revenue)
+        }
+        
+        const ctx = document.getElementById("myChart").getContext("2d");
+        const myChart = new Chart(ctx, {
+
+
+    type: "doughnut",
+    data: {
+      labels: chartLabels,
+      datasets: [
+        {
+          label: "My First Dataset",
+          data: chartData,
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    },
+    options: {
+        responsive:true,
+        maintainAspectRatio: false
+    }
+  });
+
+        console.log("Data: ", data)
+    })
+
+</script>

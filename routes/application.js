@@ -23,9 +23,13 @@ router.get('/api', (req, res) =>{
    return res.json({Greetings: "hello"})
 })
 router.get('/api/company/:companyID',async(req, res) =>{
-    brokerName = req.params.name
     foundBroker = await Broker.findById({ _id: req.params.companyID })
     res.json(foundBroker)
+})
+
+router.get('/api/finance/:companyID',async(req, res) =>{
+    foundCompany = await Company.findById({ _id: req.params.companyID }).populate('load.id').populate('driver.id')
+    return res.json(foundCompany)
 })
 
 router.get('/api/load/:loadID',async(req, res) =>{
